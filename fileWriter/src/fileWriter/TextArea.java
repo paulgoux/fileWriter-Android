@@ -806,6 +806,8 @@ public class TextArea{
 		}else return null;
 	};
 
-
+	public void setDim(int a,int b) {
+		canvas = applet.createGraphics(a,b);
+	};
 
 };
