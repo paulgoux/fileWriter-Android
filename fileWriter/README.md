@@ -1,4 +1,4 @@
-THere is an all in one solution to save and read files on android. It might be restricted in some locations but for it writes to external storage no problem and will request permissions for you. Also I have packaged the permission class inside of the jar so if you want to you can simply call a new permission as follows.
+Here is an all in one solution to save and read files on android. It might be restricted in some locations but for it writes to external storage no problem and will request permissions for you. Also I have packaged the permission class inside of the jar so if you want to you can simply call a new permission as follows.
 
 To clarify you have the library that you can add to any sketch, make sure you are making use of the ketai library which is also attached.
 
