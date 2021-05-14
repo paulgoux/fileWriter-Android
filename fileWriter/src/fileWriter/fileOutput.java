@@ -149,6 +149,17 @@ public class fileOutput {
 	public void open() {
 	};
 
+	public void readFile() {
+		if (fileContent!=null) {
+			applet.fill(0);
+			applet.text(counter, 20, 10);
+			applet.text(fileContent, 20, 20);
+		} else {
+			applet.fill(0);
+			applet.text("no file", 20, 20);
+		}
+	};
+
 	public void close() {
 		try {
 			output.flush();
@@ -157,59 +168,49 @@ public class fileOutput {
 		catch(IOException e) {
 		}
 	};
-	
+
 	public void writeFinal(String s) {
 		write(s);
-		
-		try {
-			output.flush();
-			output.close();
-		}
-		catch(IOException e) {
+		if (writeFile&&location!=null) {
+			writeln(s);
+			close();
+			loadStrings();
 		}
 	};
-	
+
 	public void writeFinal(float s) {
 		write(s);
-		
-		try {
-			output.flush();
-			output.close();
-		}
-		catch(IOException e) {
+		if (writeFile&&location!=null) {
+			writeln(s);
+			close();
+			loadStrings();
 		}
 	};
-	
+
 	public void writeFinal(String [] s) {
 		write(s);
-		
-		try {
-			output.flush();
-			output.close();
-		}
-		catch(IOException e) {
+		if (writeFile&&location!=null) {
+			writeln(s);
+			close();
+			loadStrings();
 		}
 	};
-	
+
 	public void writeFinalln(String s) {
 		writeln(s);
-		
-		try {
-			output.flush();
-			output.close();
-		}
-		catch(IOException e) {
+
+		if (writeFile&&location!=null) {
+			writeln(s);
+			close();
+			loadStrings();
 		}
 	};
-	
+
 	public void writeFinalln(float s) {
-//		writeln(s);
-		
-		try {
-			output.flush();
-			output.close();
-		}
-		catch(IOException e) {
+		if (writeFile&&location!=null) {
+			writeln(s);
+			close();
+			loadStrings();
 		}
 	};
 
@@ -238,6 +239,18 @@ public class fileOutput {
 	};
 
 	public void writeln(String s) {
+		if (writeFile&&location!=null) {
+			if (!overWrite)checkLocation();
+			try {
+				output = new FileWriter(file2, append);
+			}
+			catch(IOException e) {
+			}
+			printwriteln(s);
+		}
+	};
+
+	public void writeln(float s) {
 		if (writeFile&&location!=null) {
 			if (!overWrite)checkLocation();
 			try {
@@ -300,6 +313,18 @@ public class fileOutput {
 			if (!overWrite)checkLocation();
 			try {
 				output.append(s);
+				output.append("\n");
+			}
+			catch(IOException e) {
+			}
+		}
+	};
+
+	public void printwriteln(float s) {
+		if (writeFile&&location!=null) {
+			if (!overWrite)checkLocation();
+			try {
+				output.append(Float.toString(s));
 				output.append("\n");
 			}
 			catch(IOException e) {
