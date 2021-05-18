@@ -1,355 +1,344 @@
 package fileWriter;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import processing.core.*;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.core.PImage;
 
-public class fileInput{
+public class fileInput extends PApplet {
 	BMScontrols Bms;
-	PApplet applet;
-	public String value;
-	public String location;
-	public boolean click = false,folder,counted,fileSelect,openWindow;
-	public float x,y,w,h;
-	public Window window;
-	public String [] values;
-	public File []files;
-	public ArrayList<String>fileNames = new ArrayList<String>();
-	public HashMap<String, ArrayList<Integer>> extensions = new HashMap<String, ArrayList<Integer>>();
+	PApplet p;
+	public boolean folder, file, imageLoaded, image, audio, video, getPermission = true;
+	public String location, folderPath, fileName, absolutePath, fileContent, ext;
+	public PImage img;
+	public Activity act;
+	public Context context;
+	public Permission wStorage;
+	public ArrayList<String>Files = new ArrayList<String>();
+	public ArrayList<String>images = new ArrayList<String>();
+	public ArrayList<String>audioFiles = new ArrayList<String>();
+	public ArrayList<String>textFiles = new ArrayList<String>();
+	public ArrayList<String>videoFiles = new ArrayList<String>();
+	public ArrayList<String>otherFiles = new ArrayList<String>();
 
-	public fileInput(){
+	public fileInput(PApplet app) {
+		p = app;
+		init();
 	};
-
-	public fileInput(boolean b){
-		folder = true;
-	};
-
-	public fileInput(Button b,boolean a){
-
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
-
-		folder = true;
-	};
-
-	public fileInput(Button b,BMScontrols bms){
+	
+	public fileInput(BMScontrols bms) {
 		Bms = bms;
-		applet = bms.applet;
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
-
-		folder = true;
-		window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",bms);
+		p = bms.applet;
+		init();
 	};
-
-	public fileInput(Button b,boolean a,Object o){
-
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
-
-		folder = true;
-		
-	};
-
-	public fileInput(BMScontrols bms){
+	
+	public fileInput(Boolean b, BMScontrols bms) {
 		Bms = bms;
-		applet = bms.applet;
-		window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",bms);
+		p = bms.applet;
+		init();
 	};
 
-	public fileInput(boolean b,BMScontrols bms){
-		Bms = bms;
-		applet = bms.applet;
-		folder = true;
-		window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",bms);
-		window.launchable = false;
+	public void init() {
+		wStorage = new Permission(p, "WRITE_EXTERNAL_STORAGE");
+		absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+		getPermission = false;
+		act = p.getActivity(); 
+		context = act.getApplicationContext();
 	};
 
-	public fileInput(Button b,boolean a,BMScontrols bms){
-		Bms = bms;
-		applet = bms.applet;
-
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
-
-		folder = true;
-		window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",bms);
-		window.launchable = false;
+	public void getItem() {
+		openImageExplorer();
+		getFolder();
+		getFile();
 	};
 
-	public fileInput(Button b,boolean a,Object o,BMScontrols bms){
-		Bms = bms;
-		applet = bms.applet;
-
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
-
-		folder = true;
-		window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",bms);
-		window.launchable = false;
+	public void openImageExplorer() {
+		if (image) {
+			Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			intent.setType("image/*");
+			act.startActivityForResult(intent, 1);
+		};
 	};
 
-	public String getFile(){
+	public void getFolder() {
+		if (folder) {
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) { 
+				Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+				act.startActivityForResult(intent, 9999);
+			}
+		}
+	};
 
-		String s = value;
-		value = null;
+	public void getFile() {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) { 
+			Intent chooseFile;
+			Intent intent;
+			chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+			chooseFile.setType("file/*");
+			intent = Intent.createChooser(chooseFile, "Choose a file");
+			act.startActivityForResult(intent, 9999);
+		}
+	};
+
+	public void handleActivity(int requestCode, int resultCode, Intent data) {
+		activityResult(requestCode, resultCode, data);
+		activityResultImage(requestCode, resultCode, data);
+		onActivityResultFile(requestCode, resultCode, data);
+	};
+
+
+	public void activityResult(int requestCode, int resultCode, Intent data) {
+		if (folder) {
+			onActivityResult(requestCode, resultCode, data);
+
+			switch(requestCode) {
+			case 9999:
+				String s1 = data.getData().toString();
+				int i = s1.indexOf("primary%");
+				s1 = s1.substring(i+10, s1.length());
+				s1 = absolutePath +"/"+s1;
+				s1 = s1.replace("%2F", "/");
+				println("Test", "path" + s1);
+				listFiles(s1);
+
+				break;
+			}
+		}
+	};
+
+	public void activityResultImage(int requestCode, int resultCode, Intent data) {
+		if (image) {
+			onActivityResult(requestCode, resultCode, data);
+			if (requestCode == 1) {
+				if (resultCode == -1) {
+					if (data != null) {
+						Uri image_uri = data.getData();
+						String[] filePathColumn = { MediaStore.Images.Media.DATA };
+						Cursor cursor = context.getContentResolver().query(image_uri, filePathColumn, null, null, null);
+						cursor.moveToFirst();
+						int var7 = cursor.getColumnIndex(filePathColumn[0]);
+						String imgDecodableString = cursor.getString(var7);
+						cursor.close();
+						PApplet.println(imgDecodableString);
+						if (Build.VERSION.SDK_INT >= 28) {
+							try {
+								InputStream ips = context.getContentResolver().openInputStream(image_uri);
+								Bitmap bitmap = BitmapFactory.decodeStream(ips);
+								img = new PImage(bitmap.getWidth(), bitmap.getHeight(), 2);
+								bitmap.getPixels(img.pixels, 0, img.width, 0, 0, img.width, img.height);
+								img.updatePixels();
+								imageLoaded = true;
+								PApplet.println("success", img.width, img.height);
+							} 
+							catch (Exception e) {
+								e.printStackTrace();
+							}
+						} else {
+							img = p.loadImage(imgDecodableString);
+							imageLoaded = true;
+							PApplet.println("success", img.width, img.height);
+						}
+					} else {
+						PApplet.println("No data");
+					}
+				}
+			}
+		}
+	};
+
+	public void onActivityResultFile(int requestCode, int resultCode, Intent data) {
+		if (file&&!image&&!audio&&!video) {
+			onActivityResult(requestCode, resultCode, data);
+
+			switch(requestCode) {
+			case 9999:
+				String s1 = data.getData().toString();
+				int i = s1.indexOf("external_files");
+				s1 = s1.substring(i+15, s1.length());
+				s1 = absolutePath +"/"+s1;
+				s1 = s1.replace("%2F", "/");
+				setLocation(s1);
+				loadFile(s1);
+				println("Test", "path " + s1);
+				break;
+			}
+		}
+	};
+
+	public String[] listFiles(String s1) {
+		String  []s = null;
+		String path = s1;
+		println("Files", "Path: " + path);
+		File directory = new File(path);
+		File[] files = directory.listFiles();
+		if (files!=null) {
+			s = new String [files.length];
+			println("Files", "Size: "+ files.length);
+			for (int i = 0; i < files.length; i++)
+			{
+				s[i] = files[i].getName();
+				Files.add(s[i]);
+				filterAll(s[i]);
+
+				println("Files", "FileName: " + files[i].getName());
+			}
+		}
+		println("Images", images.size());
+		println("text", textFiles.size());
+		println("Audio", audioFiles.size());
+		println("Other", otherFiles.size());
 		return s;
 	};
 
-	public void setLink(Button b){
-		x = b.x;
-		y = b.y;
-		w = b.w;
-		h = b.h;
+	public void filterAll(String s) {
+		filterImage(s);
+		filterText(s);
+		filterAudio(s);
+		filterVideo(s);
+		filterOthers(s);
 	};
 
-	public String getFolder(){
-		String s = value;
-		value = null;
-		return s;
-	};
-
-	public void saveLocation(String location){
-		this.location = location;
-	};
-
-	public void listen(){
-		boolean k = false;
-		if(!folder){
-			if(click()){
-				if(window!=null)window.open = true;
-				openWindow = true;
-				fileSelect = true;
-			}}else {
-				if(click()){
-					if(window!=null)window.open = true;
-					openWindow = true;
-					fileSelect = true;
-				}}
-		
-		if(openWindow&&window.open) {
-			
-			window.windowLogic();
+	public void filterImage(String s) {
+		if (s.contains("jpg")
+				||s.contains("JPG")
+				||s.contains("bmp")
+				||s.contains("BMP")
+				||s.contains("png")
+				||s.contains("PNG")
+				||s.contains("gif")
+				||s.contains("GIF")) {
+			if (!images.contains(s))images.add(s);
 		}
-		if(openWindow&&!window.open){
-			openWindow = false;
-			value = window.currentf;
-			applet.println("file input listen location;",value);
-		}
-		if(window!=null)window.displayGrid();
-		if(fileSelect&&value!=null)PApplet.println("Location: " + value);
-
-	};
-	
-	public void listen(PVector m){
-		boolean k = false;
-//		if(window==null)window = new Window(200,200,200,200,"C:\\Users\\paul goux\\",Bms);
-		if(!folder){
-			if(click(m)){
-				if(window!=null)window.open = true;
-				openWindow = true;
-				fileSelect = true;
-			}}else {
-				if(click(m)){
-					if(window!=null)window.open = true;
-					openWindow = true;
-					fileSelect = true;
-				}}
-		
-		if(openWindow&&window.open) {
-			
-			window.windowLogic();
-		}
-		if(openWindow&&!window.open){
-			openWindow = false;
-			value = window.currentf;
-			applet.println("file input listen location;",value);
-		}
-		if(window!=null)window.displayGrid();
-		if(fileSelect&&value!=null)PApplet.println("Location: " + Bms.Location);
-
 	};
 
-	public void listen1(){
-		click();
-		if(!folder){
-			if(click){
-				if(window!=null)window.open = true;
-				openWindow = true;
-				
+	public void filterText(String s) {
+		if (s.contains("txt")
+				||s.contains("doc")
+				||s.contains("docx")
+				||s.contains("csv")) {
+			if (!textFiles.contains(s))textFiles.add(s);
+		}
+	};
+
+	public void filterAudio(String s) {
+		if (s.contains("ogg")
+				||s.contains("mp3")
+				||s.contains("wav")) {
+			if (!audioFiles.contains(s))audioFiles.add(s);
+		}
+	};
+
+	public void filterVideo(String s) {
+		if (s.contains("mp4")
+				||s.contains("wmv")
+				||s.contains("avi")
+				||s.contains("mkv")) {
+			if (!videoFiles.contains(s))videoFiles.add(s);
+		}
+	};
+
+	public void filterOthers(String s) {
+		if (!images.contains(s)
+				&&!textFiles.contains(s)
+				&&!videoFiles.contains(s)
+				&&!audioFiles.contains(s)) {
+			if (!otherFiles.contains(s))otherFiles.add(s);
+		}
+	};
+
+	public String loadFile(String s) {
+		println("test Location",location);
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream (new File(s));
+			println("try reading file");
+			InputStreamReader isr = new InputStreamReader(fis);
+			// READ STRING OF UNKNOWN LENGTH
+			StringBuilder sb = new StringBuilder();
+			char[] inputBuffer = new char[2048];
+			int l;
+			// FILL BUFFER WITH DATA
+			while ((l = isr.read(inputBuffer)) != -1) {
+				sb.append(inputBuffer, 0, l);
+				println("write data", inputBuffer, 0, l);
 			}
-		}else {
-			if(click){
-				if(window!=null)window.open = true;
-				openWindow = true;
-				values = fileUtils.listNames(value);
+			// CONVERT BYTES TO STRING
+			fileContent = sb.toString();
+			println("file",fileName+"."+ext,fileContent);
+			fis.close();
+		}
+		catch (Exception e) {
+			println("cannot fetch file", e);
+		} 
+		finally {
+			if (fis != null) {
+
+				fis = null;
 			}
 		}
-		
-		if(openWindow&&window.open) {
-			window.windowLogic();
-		}
-		if(openWindow&&!window.open){
-			openWindow = false;
-			value = window.link;
-		}
-		if(window!=null)window.displayGrid();
+		return fileContent;
 	};
 
-	public void listen_(){
-		if(!folder) {
+	public void setLocation(String s) {
+		location = s;
+		folderPath = s.substring(0, s.lastIndexOf("/"));
+		fileName = s.replace(folderPath+"/", "");
+		getExt(fileName);
+		PApplet.println("Fname", folderPath);
+		PApplet.println("fileName", fileName);
+		PApplet.println("ext", ext);
+		init();
+	}
 
-			//	    	selectInput("Select a file to process:", "fileSelected");
-		}
-		else {
-			//	    	selectInput("Select a file to process:", "folderSelected");
-		}
+	public void getExt(String location) {
+
+		int count = 0;
+		fileName = location.substring(0, location.indexOf("."));
+		ext = location.replace(fileName, "");
+		ext = ext.replace(".", "");
+		ext = ext.replace(fileName, "");
 	};
 
-	public void listExt() {
-
-		if(values!=null&&!counted){
-			for(int i=0;i<values.length;i++){
-
-				File f = new File(values[i]);
-
-				String type = fileUtils.getFileExtension(f);
-				if(!extensions.containsKey(type)){
-					ArrayList<Integer> n = new ArrayList<Integer>();
-					n.add(i);
-					extensions.put(type,n);
-				}else extensions.get(type).add(i);
-			}
-			counted = true;
+	public void displayImage() {
+		if (imageLoaded) {
+			p.image(img, 0, 0);
 		}
 	};
 
-	public void getTextFiles(){
-
-
-	};
-
-	public void getImageFiles(){
-
-
-	};
-
-	public void getVideoFiles(){
-
-
-	};
-
-	public void getAudioFiles(){
-
-
-	};
-
-	public String []getFolder(String location) {
-
-		String []names = fileUtils.listNames(location);
-
-		if(names!=null&&!counted){
-			for(int i=0;i<names.length;i++){
-
-				File f = new File(names[i]);
-
-				String type = fileUtils.getFileExtension(f);
-				String[] m = PApplet.match(names[i], "ubyte");
-
-				if(m==null){
-					if(!extensions.containsKey(type)){
-						ArrayList<Integer> n = new ArrayList<Integer>();
-						n.add(i);
-						extensions.put(type,n);
-						fileNames.add(names[i]);
-					}else{
-						extensions.get(type).add(i);
-						fileNames.add(names[i]);
-					}}
-				else{
-					if(!extensions.containsKey("ubyte")){
-						ArrayList<Integer> n = new ArrayList<Integer>();
-						n.add(i);
-						extensions.put("ubyte",n);
-						fileNames.add(names[i]);
-					}else{
-						extensions.get(type).add(i);
-						fileNames.add(names[i]);
-					}}}}
-
-		String []s = new String[fileNames.size()];
-
-		for(int i=0;i<fileNames.size();i++){
-			s[i] = fileNames.get(i);
-		}
-		return s;
-	};
-
-	public boolean click(){
-		boolean k = false;
-		if (pos()&&applet.mousePressed&&!click){
-			click = true;
-			k = false;
-		}else if(click&&!applet.mousePressed){
-			k = true;
-			click = false;
-		}
-		return k;
-	};
-	
-	public boolean click(PVector m){
-		boolean k = false;
-		if (pos(m)&&applet.mousePressed&&!click){
-			click = true;
-			k = false;
-		}else if(click&&!applet.mousePressed){
-			k = true;
-			click = false;
-		}
-		return k;
-	};
-
-	public  boolean pos(PVector mouse){
-		return mouse.x>x&&mouse.x<x+w&&mouse.y>y&&mouse.y<y+h;
-	};
-	
-	public  boolean pos(){
-		return applet.mouseX>x&&applet.mouseX<x+w&&applet.mouseY>y&&applet.mouseY<y+h;
-	};
-
-	public void fileSelected(File selection){
-		if(selection != null)Bms.File.value = selection.getAbsolutePath();
-	};
-
-	public void folderSelected(File selection) {
-		if(selection != null){
-			Bms.File.value = selection.getAbsolutePath();
-			Bms.Location = selection.getAbsolutePath();
+	public void displayImage(int x, int y) {
+		if (imageLoaded) {
+			p.image(img, x, y);
 		}
 	};
 
-	public void selectInput() {
-
+	public void displayImage(PGraphics p, int x, int y) {
+		if (imageLoaded) {
+			p.image(img, x, y);
+		}
 	};
 
-	public void selectFolder() {
-
-	};
-	
-	public void getDim() {
-		
+	public void readContents() {
+		if (fileContent!=null) {
+			p.fill(255,0,0);
+			p.text(fileContent, 20, 40);
+		} else {
+			p.fill(0,255,0);
+			p.text("no file", 20, 20);
+		}
 	};
 };

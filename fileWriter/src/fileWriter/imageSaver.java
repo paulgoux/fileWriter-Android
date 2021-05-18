@@ -56,8 +56,6 @@ public class imageSaver{
 			checkLocation(folderName, imageFile);
 			save();
 			counter ++;
-			
-			
 		}
 	};
 

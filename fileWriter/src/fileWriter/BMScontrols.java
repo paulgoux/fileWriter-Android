@@ -81,7 +81,7 @@ public class BMScontrols{
 
 	//Capture Cam;
 	public Dropdown dd;
-	public Keyboard keyboard;
+	public keyboard keyboard;
 
 
 	public BMScontrols(PApplet applet) {
@@ -107,7 +107,7 @@ public class BMScontrols{
 
 	public void initColors(){
 		output = new fileOutput(this);
-		keyboard  = new Keyboard(applet);
+		keyboard  = new keyboard(applet);
 		absolutePath = new String(Environment.getExternalStorageDirectory().getAbsolutePath()); 
 		applet.println("bms absolutePath",absolutePath);
 
