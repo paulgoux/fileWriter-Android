@@ -10,7 +10,7 @@ import processing.core.PVector;
 
 public class Menu {
 	PApplet applet;
-	BMScontrols Bms;
+	BMS Bms;
 	public int id, item, t, toggle2, type = 0, index =-1, subindex = -1, t2, sindex=-1, counter, slcount,
 			nindex = -1,rows,cols;
 	public float x, y, bx, by, w, h, xoff, yoff, window = 0, htotal, Yoff, xpos, ypos, tsize = 12, bsize,
@@ -63,7 +63,7 @@ public class Menu {
 		windowHeight = h;
 	};
 
-	public Menu(float xx, float yy, float ww, float hh, String Label,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, float hh, String Label,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -96,7 +96,7 @@ public class Menu {
 		bsize = tsize;
 	};
 
-	public Menu(float xx, float yy, float ww, float hh,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, float hh,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -147,7 +147,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww, float hh, String Label, String [] list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, float hh, String Label, String [] list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -221,7 +221,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww, float hh,float ss, String Label, String [] list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, float hh,float ss, String Label, String [] list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -289,7 +289,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww,float hh,float ss, String [] list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww,float hh,float ss, String [] list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -328,7 +328,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww, String [] list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, String [] list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -367,7 +367,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww,float hh, String [] list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww,float hh, String [] list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -442,7 +442,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww, ArrayList<String> list,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, ArrayList<String> list,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -519,7 +519,7 @@ public class Menu {
 		windowHeight = (h+spacing) * items.size();
 	};
 
-	public Menu(float xx, float yy, float ww, String [] list, float k,BMScontrols bms) {
+	public Menu(float xx, float yy, float ww, String [] list, float k,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -2562,7 +2562,7 @@ public class Menu {
 		}
 	};
 
-	public void setBms(BMScontrols bms) {
+	public void setBms(BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		for(int i=0;i<items.size();i++) {
@@ -2581,18 +2581,19 @@ public class Menu {
 
 	public void setTab(tab t) {
 		parentTab = t;
+		Bms = t.Bms;
 		applet = t.applet;
+		parentCanvas = true;
+		localCanvas = t.canvas;
 		for(int i=0;i<items.size();i++) {
 			Button b = items.get(i);
-			b.parentTab = t;
-			b.applet = applet;
+			b.setTab(t);
 			b.initColors();
 		}
 		for(int i=0;i<sliders.size();i++) {
-			Slider b = sliders.get(i);
-			b.parentTab = t;
-			b.applet = applet;
-			b.initColors();
+			Slider s = sliders.get(i);
+			s.setTab(t);
+			s.initColors();
 		}
 	};
 
@@ -2780,5 +2781,6 @@ public class Menu {
 		if(i<items.size()&&items.get(i).submenu!=null)return items.get(i).submenu;
 		else return null;
 	};
+
 
 };

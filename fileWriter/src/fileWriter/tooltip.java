@@ -3,7 +3,7 @@ package fileWriter;
 import processing.core.PApplet;
 
 public class tooltip{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public float x,y,w,h,transparency;
 	//int 

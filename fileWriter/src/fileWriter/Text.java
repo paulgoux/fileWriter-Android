@@ -3,14 +3,14 @@ package fileWriter;
 import processing.core.PApplet;
 
 public class Text{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public float x,y,by,bx,textsize;
 
 	public boolean visible;
 	public int col,col1,col2,col3,col4;
 	public String text = "";
-	public Text(float X,float y,String s,BMScontrols bms) {
+	public Text(float X,float y,String s,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;

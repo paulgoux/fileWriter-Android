@@ -6,7 +6,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Quad{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	int id,iid,counter,xpos,ypos;
 	float x,y,w,h,dens,dens2,dens3,dens4,v,v2,v3,v4,kv,kv2,kv3,kv4;
@@ -42,7 +42,7 @@ public class Quad{
 		init();
 	};
 	
-	public Quad(PVector P,int ID,float W,float H,Scene s,BMScontrols bms){
+	public Quad(PVector P,int ID,float W,float H,Scene s,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		p = P;

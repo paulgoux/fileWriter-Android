@@ -9,9 +9,10 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Dock{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	float x,y,w,h,bx,by,bw,bh,currentWidth,currentHeight,r1,r2,r3,r4;
+	int dockHeight = 40;
 	ArrayList<String> names = new ArrayList<String>();
 	ArrayList<Button> buttons = new ArrayList<Button>();
 	ArrayList<PGraphics> canvases = new ArrayList<PGraphics>();
@@ -21,7 +22,7 @@ public class Dock{
 	Object currentObject;
 	Object parent;
 
-	public Dock(float x,float y,float w,float h,BMScontrols bms){
+	public Dock(float x,float y,float w,float h,BMS bms){
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -48,9 +49,9 @@ public class Dock{
 
 	public void add(tab t){
 		String loc = t.label;
-		PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,20);
+		PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,dockHeight);
 		canvases.add(canvas);
-		Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,20,loc,Bms);
+		Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,dockHeight,loc,Bms);
 		b.classicBar = true;
 		buttons.add(b);
 		objects.add(t);
@@ -61,9 +62,9 @@ public class Dock{
 	public void add(Window t){
 		String loc ="";
 		if(t.currentp!=null)loc = t.currentp;
-		PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,20);
+		PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,dockHeight);
 		canvases.add(canvas);
-		Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,20,loc,Bms);
+		Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,dockHeight,loc,Bms);
 		b.applet = applet;
 		b.Bms = Bms;
 		b.classicBar = true;
@@ -89,10 +90,10 @@ public class Dock{
 		if(pos()&&update&&loc!=null&&!names.contains(loc)){
 			Bms.currentMouseObject = null;
 			Bms.currentObject = null;
-			PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,20);
+			PGraphics canvas = applet.createGraphics((int)applet.textWidth(loc)+20,dockHeight);
 			canvases.add(canvas);
 
-			Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,20,loc,Bms);
+			Button b = new Button(currentWidth,y,applet.textWidth(loc)+20,dockHeight,loc,Bms);
 
 			b.classicBar = true;
 			buttons.add(b);

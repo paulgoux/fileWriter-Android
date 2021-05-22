@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class Table_ {
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public int rows, cols, bcols, brows;
 	public float x, y, w, h, bx, by, bw, bh, xpadding, ypadding;

@@ -7,7 +7,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Window extends Scene{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public float bw,bh, navheight = 50,deltay,transparency = 200,transparency1 = 50,transparency2 = 80,
 			transparency3 = 100,transparency4 = 150,r1,r2,r3,r4;
@@ -35,7 +35,7 @@ public class Window extends Scene{
 	public String link,currentp,back,forward,currentl,currentf;
 	float [] window;
 	int wcol;
-	TextBox fileName,fileDir;
+	TextArea fileName,fileDir;
 
 	Window(){
 
@@ -47,7 +47,7 @@ public class Window extends Scene{
 		applet = bms;
 	};
 
-	public Window(BMScontrols bms){
+	public Window(BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 
@@ -67,7 +67,7 @@ public class Window extends Scene{
 		fill = true;
 	};
 
-	public Window(float X,float Y,float WW,float HH,BMScontrols bms){
+	public Window(float X,float Y,float WW,float HH,BMS bms){
 
 		x = X;
 		y = Y;
@@ -107,7 +107,7 @@ public class Window extends Scene{
 //		applet.println("Window const b",b.x,b.y,b.h,b.w,applet);
 	};
 
-	public Window(float xx, float yy, float ww,float hh,String dir,BMScontrols bms){
+	public Window(float xx, float yy, float ww,float hh,String dir,BMS bms){
 
 		x = xx;
 		y = yy;
@@ -214,7 +214,7 @@ public class Window extends Scene{
 		if(debug)applet.println("window",this);
 	};
 
-	public Window(float xx, float yy, float ww,float hh,String dir,int n,BMScontrols bms){
+	public Window(float xx, float yy, float ww,float hh,String dir,int n,BMS bms){
 
 		x = xx;
 		y = yy;
@@ -356,8 +356,10 @@ public class Window extends Scene{
 		n.border = false;
 		n.tcol = 0;
 		quickNav.add(n);
-		fileName = new TextBox(0,0,370,20,100,"File name...",Bms);
-		fileDir = new TextBox(0,0,370,20,100,Bms);
+		fileName = new TextArea(0,0,370,20,"File name...",Bms);
+		fileName.textSize = 20;
+		fileDir = new TextArea(0,0,370,20,Bms);
+		fileDir.textSize = 20;
 		String [] s1 = {"Open","Cancel"};
 		select = new Menu(0,0,90,20,10,s1,Bms);
 	};
@@ -596,7 +598,7 @@ public class Window extends Scene{
 			Window w2 = windows.get(windows.size()-1);
 			float ay = 50;
 			if(w2!=null) {
-				fileDir.textBox = currentp.replace("//", "/");
+				fileDir.tempLine = currentp.replace("//", "/");
 			}
 			//else fileDir.textBox = "";
 			select.setPos(x+w-100,y+h-ay);
@@ -784,8 +786,7 @@ public class Window extends Scene{
 					currentp = windows.get(windows.size()-1).link;
 					sliders.get(0).value = 0;sliders.get(0).valuey = 0;
 					if(fileDir!=null) {
-						fileDir.textBox = "";
-						fileDir.textbox = new ArrayList<Letter>();
+						fileDir.reset();
 					}
 				}
 			}
@@ -796,8 +797,7 @@ public class Window extends Scene{
 				windows.add(w1);
 				currentp = windows.get(windows.size()-1).link;
 				if(fileDir!=null) {
-					fileDir.textBox = "";
-					fileDir.textbox = new ArrayList<Letter>();
+					fileDir.reset();
 				}
 			}
 		}

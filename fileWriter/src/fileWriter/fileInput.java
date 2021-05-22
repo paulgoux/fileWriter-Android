@@ -21,7 +21,7 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 
 public class fileInput extends PApplet {
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet p;
 	public boolean folder, file, imageLoaded, image, audio, video, getPermission = true;
 	public String location, folderPath, fileName, absolutePath, fileContent, ext;
@@ -35,19 +35,20 @@ public class fileInput extends PApplet {
 	public ArrayList<String>textFiles = new ArrayList<String>();
 	public ArrayList<String>videoFiles = new ArrayList<String>();
 	public ArrayList<String>otherFiles = new ArrayList<String>();
+	dialogueBox dbox,dbox1,dbox2,dbox3,dbox4; 
 
 	public fileInput(PApplet app) {
 		p = app;
 		init();
 	};
 	
-	public fileInput(BMScontrols bms) {
+	public fileInput(BMS bms) {
 		Bms = bms;
 		p = bms.applet;
 		init();
 	};
 	
-	public fileInput(Boolean b, BMScontrols bms) {
+	public fileInput(Boolean b, BMS bms) {
 		Bms = bms;
 		p = bms.applet;
 		init();

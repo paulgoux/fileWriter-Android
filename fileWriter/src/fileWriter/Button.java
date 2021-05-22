@@ -11,7 +11,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Button{
-	public BMScontrols Bms;
+	public BMS Bms;
 	public PApplet applet;
 	public PGraphics canvas;
 	public float x,y,bx,by,w,h,size,textSize = 1,xoff,yoff,bsize,tsize = 12,tyoff,txoff,tmax = 2,tw,th,borderSize;
@@ -23,7 +23,7 @@ public class Button{
 	public boolean drag,resize, radio,update,border = true,vertical,horizontal,gif,Img,value,textright,textbtm,textleft,
 			textup,texttoggle,animate = true,toggleb,mdown,m1down,sdown,visible = true,plain = true,labelVisible = true
 			,up,right,down,classicBar,toggleBox,mdown2,textcheck,parentCanvas,subLeft,click,mclick,m2down,toggle;
-	public boolean globalTheme = true,mdown1,mup,localTheme,localText,localBorder,localFill,localTrans,click1;
+	public boolean globalTheme = true,mdown1,mup,localTheme,localText,localBorder,localFill,localTrans,click1,hover,clicku;
 	public int fcol,bcol,hcol,col,tcol,col1 = fcol,toggleCol,borderCol = 0;
 	public Menu parent;
 	public Menu submenu;
@@ -55,7 +55,7 @@ public class Button{
 
 
 
-	public Button(float xx, float yy, float ww, float hh, String Label,BMScontrols bms){
+	public Button(float xx, float yy, float ww, float hh, String Label,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;
@@ -86,7 +86,7 @@ public class Button{
 
 	};
 
-	public Button(float xx, float yy, float ww, float hh,BMScontrols bms){
+	public Button(float xx, float yy, float ww, float hh,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 
@@ -212,7 +212,7 @@ public class Button{
 				if(pos()||textbox.pos()||textbox.toggle)texttoggle=true;
 				else texttoggle = false;
 				if(texttoggle)textbox.draw();
-				if(textbox.pos()&&applet.mousePressed&&parent!=null){ parent.draw();}
+				if(textbox.pos()&&Bms.mouseReleased&&parent!=null){ parent.draw();}
 				else parent.toggle = false;
 			}
 			if(img!=null){
@@ -530,8 +530,6 @@ public class Button{
 		else if(classicBar)drawClassicBar();
 		else if(toggleBox)drawTogglebox();
 
-		if(subpos())toggle2 = 1;
-		else toggle2 = 0;
 
 		applet.strokeWeight(1);
 		if(info!=null)info.draw();
@@ -545,7 +543,6 @@ public class Button{
 		}
 		if(radio||toggleBox){
 		}
-
 	};
 
 	public void logic(PVector m){
@@ -557,6 +554,11 @@ public class Button{
 		}
 		if(radio||toggleBox){
 		}
+//		if(Bms.mousePressed) {
+//			mdown = true;
+//			mup = false;
+//		}
+		if(Bms.mouseReleased)mdown = false;
 
 	};
 
@@ -569,9 +571,6 @@ public class Button{
 		else if(radio)drawClassicRadio(canvas);
 		else if(classicBar)drawClassicBar(canvas);
 		else if(toggleBox)drawTogglebox(canvas);
-
-		if(subpos(mouse))toggle2 = 1;
-		else toggle2 = 0;
 
 		canvas.strokeWeight(1);
 		if(info!=null)info.draw();
@@ -601,6 +600,9 @@ public class Button{
 	};
 
 	public boolean pos(){
+//		if(parentTab==null) mouse = new PVector(applet.mouseX,applet.mouseY);
+//		else 
+		
 		if(radio||toggleBox){
 			return x +rx < applet.mouseX && applet.mouseX < x + w+rx && y < applet.mouseY && applet.mouseY < y + h+2;
 		}else{
@@ -609,12 +611,32 @@ public class Button{
 
 	};
 
-	boolean radioPos(){
+	public boolean radioPos(){
 		//return false;
 		return x +applet.textWidth(label)+20 < applet.mouseX && applet.mouseX < x + w+applet.textWidth(label)+20 && y < applet.mouseY && applet.mouseY < y + h+2;
 	};
 
-	boolean pos(PVector m){
+	void debugDraw(PGraphics canvas) {
+
+		if(parentTab!=null) {
+
+			canvas.fill(Bms.bgcol);
+			if(pos(mouse))canvas.fill(0,100);
+
+			canvas.rect(x,y,w,h);
+			canvas.fill(0);
+			canvas.text(label,x,y+Bms.textSize);
+			
+
+
+		}
+	};
+
+	public boolean pos(PVector m){
+		//if(m == null) {
+		//			if(parentTab==null)m = new PVector(applet.mouseX,applet.mouseY);
+		//			else m = mouse;
+		//}
 		if(radio||toggleBox){
 
 			return rx+x  < m.x && m.x < x+rx + w && y < m.y && m.y < y + h+2;
@@ -625,7 +647,8 @@ public class Button{
 
 	};
 
-	boolean pos(PGraphics m){
+	public boolean pos(PGraphics m){
+
 		if(radio||toggleBox){
 
 			return rx+x  < mouse.x && mouse.x < x+rx + w && y < mouse.y && mouse.y < y + h+2;
@@ -635,22 +658,22 @@ public class Button{
 		}
 	};
 
-	boolean pos2(){
+	public boolean pos2(){
 
 		return x < applet.mouseX && applet.mouseX < x + w + applet.textWidth(label)+5 && y < applet.mouseY && applet.mouseY < y + h+2;
 	};
 
-	boolean pos2(PVector m){
+	public boolean pos2(PVector m){
 
 		return x < m.x && m.x < x + w + applet.textWidth(label)+5 && y < m.y && m.y < y + h+2;
 	};
 
-	boolean pos3(){
+	public boolean pos3(){
 
 		return x + applet.textWidth(label)+5 < applet.mouseX && applet.mouseX < x + w + applet.textWidth(label)+5 && y < applet.mouseY && applet.mouseY < y + h+2;
 	};
 
-	boolean pos3(PVector m){
+	public boolean pos3(PVector m){
 
 		return x + applet.textWidth(label)+5 < m.x && m.x < x + w + applet.textWidth(label)+5 && y < m.y && m.y < y + h+2;
 	};
@@ -663,107 +686,93 @@ public class Button{
 		label = a;
 	};
 
-	String getName(){
+	public String getName(){
 		String a = "";
 		if (label!=null) a = label;
 
 		return a;
 	};
 
-	boolean mouseDown(){
-		boolean k = false;
-		if(pos()&&applet.mousePressed)k = true;
-		if(!applet.mousePressed)k = false;
-		return k;
-	};
-
 	public boolean clickD(){
-		boolean k = false;
-		if (pos()&&applet.mousePressed&&!click){
-			click = true;
-			k = true;
-		}else if(click&&!applet.mousePressed){
-			click = false;
+		if(hover&&Bms.click) {
+			if(Bms.click&&toggle)toggle = false;
+			else if(Bms.click&&!toggle)toggle = true;
+			return true;
 		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle)toggle = true;
-		return k;
+		return hover&&Bms.click;
 	};
 
 	boolean clickD(PVector m){
-		boolean k = false;
-		if (pos(m)&&applet.mousePressed&&!click){
-			click = true;
-			k = true;
-		}else if(click&&!applet.mousePressed){
-			click = false;
+		if(hover&&Bms.click) {
+			if(Bms.click&&toggle)toggle = false;
+			else if(Bms.click&&!toggle)toggle = true;
+			return true;
 		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle) toggle = true;
-		return k;
+		return hover&&Bms.click;
 	};
-	
+
 	public boolean clickU(){
-		boolean k = false;
-		if (pos()&&applet.mousePressed&&!click){
-			click = true;
-			k = true;
-		}else if(click&&!applet.mousePressed){
-			k = true;
-//			click = false;
+//		if(Bms.mousePressed)mup = false;
+		if(hover&&Bms.mouseReleased&&!mup) {
+			mup = true;
+			if(Bms.mouseReleased&&toggle)toggle = false;
+			else if(Bms.mouseReleased&&!toggle)toggle = true;
+			return true;
 		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle)toggle = true;
-		return k;
+		return hover&&Bms.mouseReleased&&!mup;
 	};
 
 	public boolean clickU(PVector m){
-		boolean k = false;
-		if (pos(m)&&applet.mousePressed&&!click){
-			click = true;
-//			k = true;
-			
-		}else if(click&&!applet.mousePressed){
-			k = true;
-			click = false;
+//		if(Bms.mousePressed)mup = false;
+		if(Bms.mouseReleased&&mdown)applet.println("btn clicku p test");
+		if(hover&&Bms.mouseReleased&&!mup) {
+			mup = true;
+			if(Bms.mouseReleased&&toggle)toggle = false;
+			else if(Bms.mouseReleased&&!toggle)toggle = true;
+			applet.println("btn clicku p",toggle);
+			return true;
 		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle) toggle = true;
-		return k;
-	};
-	
-	public boolean click(){
-		boolean k = false;
-		if (pos()&&applet.mousePressed&&!click){
-			click = true;
-			k = true;
-		}else if(click&&!applet.mousePressed){
-//			k = true;
-			click = false;
-		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle)toggle = true;
-		return k;
+		return hover&&Bms.mouseReleased&&!mup;
 	};
 
-	boolean click(PVector m){
-		boolean k = false;
-		if (pos(m)&&applet.mousePressed&&!click){
-			click = true;
-			k = true;
-		}else if(click&&!applet.mousePressed){
-//			k = true;
-			click = false;
+	public boolean click(){
+//		if(Bms.mousePressed)mup = false;
+		
+		if(hover&&Bms.mouseReleased&&!Bms.mousePressed) {
+//			mup = true;
+			if(toggle)toggle = false;
+			else if(!toggle)toggle = true;
+			//return true;
 		}
-		if(k&&toggle)toggle = false;
-		else if(k&&!toggle) toggle = true;
-		return k;
+		return hover&&Bms.mouseReleased&&!Bms.mousePressed;
 	};
-	
+
+	public boolean click(PVector m){
+//		if(Bms.mouseReleased)applet.println("btn click mup",toggle);
+//		if(Bms.mouseReleased&&hover)applet.println("btn click p click",toggle);
+//		if(clicku)applet.println("btn click p mdown",toggle);
+//		if(hover)applet.println("btn hover click p",toggle);
+		boolean k = false;
+		m = mouse;
+		if(parentTab!=null)m = parentTab.getMouse();
+		else m = new PVector(applet.mouseX,applet.mouseY);
+		if(pos(m)&&Bms.mouseReleased) {
+			mdown = false;
+			k = true;
+			if(toggle)toggle = false;
+			else if(!toggle)toggle = true;
+			applet.println("btn click p",toggle);
+//			return true;
+		}
+		
+		return pos(m)&&Bms.mouseReleased;
+	};
+
 	public boolean click(Object a,String b){
 		boolean k = clickU();
 		if(parent!=null){
 			if(k&&parent.toggle){
+				applet.println("button click os");
 				Field field = null;
 
 				try{
@@ -791,9 +800,33 @@ public class Button{
 	};
 
 	public boolean click(Object a,String b,PVector m){
-		boolean k = clickU(m);
+		if(parentTab!=null)m = mouse;
+		if(parentTab!=null&&m==null)m = parentTab.getMouse();
+		boolean k = click(m);
+		PGraphics canvas = parentTab.canvas;
+		
+//		m = parentTab.mouse;
+//		if(m!=null&&canvas!=null) {
+//			canvas.fill(255,0,0);
+//			float r = 100;
+//			canvas.fill(0,0,255);
+//			if(m!=null)canvas.ellipse(m.x,m.y,r,r);
+//			m = parentTab.getMouse();
+//			canvas.fill(255,0,255);
+//			if(m!=null)canvas.ellipse(m.x,m.y,r-20,r-20);
+//			canvas.fill(0);
+//			if(mouse!=null)canvas.ellipse(mouse.x,mouse.y,r-40,r-40);
+//			canvas.fill(0,255,0);
+//			canvas.ellipse(applet.mouseX-x,applet.mouseY-y,r-60,r-60);
+//		}
+//		if(k)applet.println("btn click osp",toggle);
+//		if(pos(m)&&Bms.mouseReleased)applet.println("btn click osp, mup",toggle);
 		if(parent!=null){
+
+
+
 			if(k&&parent.toggle){
+				applet.println("button click osp",toggle);
 				Field field = null;
 
 				try{
@@ -805,6 +838,7 @@ public class Button{
 				}catch (IllegalAccessException e) {
 				}}}
 		else{
+			
 			if(k){
 				Field field = null;
 
@@ -824,6 +858,7 @@ public class Button{
 		boolean k = clickU();
 		if(parent!=null){
 			if(k&&parent.toggle){
+				applet.println("button clicku os");
 				Field field = null;
 
 				try{
@@ -853,7 +888,9 @@ public class Button{
 	public boolean clickU(Object a,String b,PVector m){
 		boolean k = clickU(m);
 		if(parent!=null){
+
 			if(k&&parent.toggle){
+				applet.println("button clicku osp");
 				Field field = null;
 
 				try{
@@ -879,11 +916,13 @@ public class Button{
 		}
 		return k;
 	};
-	
+
 	public boolean clickD(Object a,String b){
 		boolean k = clickD();
 		if(parent!=null){
+
 			if(k&&parent.toggle){
+				applet.println("button clickd os");
 				Field field = null;
 
 				try{
@@ -913,7 +952,9 @@ public class Button{
 	public boolean clickD(Object a,String b,PVector m){
 		boolean k = clickD(m);
 		if(parent!=null){
+
 			if(k&&parent.toggle){
+				applet.println("button clickd osp");
 				Field field = null;
 
 				try{
@@ -942,12 +983,12 @@ public class Button{
 
 	public void reverseclick(Object a,String b){
 		if(parent!=null){
-			//if(!pos()&&parent.toggle&&applet.mousePressed)mdown = true;
-			if(pos()&&parent.toggle&&applet.mousePressed&&!mdown)mdown = true;
+			//if(!pos()&&parent.toggle&&Bms.mouseReleased)mdown = true;
+			if(pos()&&parent.toggle&&Bms.mouseReleased&&!mdown)mdown = true;
 
 			if(mdown)toggle = true;
 			else toggle = false;
-			if(mdown && !applet.mousePressed){mdown = false;}
+			if(mdown && !Bms.mouseReleased){mdown = false;}
 
 			Field field = null;
 
@@ -961,13 +1002,13 @@ public class Button{
 			}catch (IllegalAccessException e) {
 			}}
 		else{
-			if(pos()&&applet.mousePressed&&!mdown)mdown = true;
+			if(pos()&&Bms.mouseReleased&&!mdown)mdown = true;
 
 			if(mdown){
 				toggle = true;
 			}
 			else toggle = false;
-			if(mdown && !applet.mousePressed){mdown = false;}
+			if(mdown && !Bms.mouseReleased){mdown = false;}
 
 			Field field = null;
 
@@ -987,11 +1028,11 @@ public class Button{
 		PVector m = new PVector(applet.mouseX,applet.mouseY);
 		if(mouse!=null)m = mouse;
 		if(parent!=null) {
-			if(pos(m)&&parent.toggle&&applet.mousePressed) {mdown = true;mup = false;}
-			if(!applet.mousePressed){mdown = false;mup = true;}
+			if(pos(m)&&parent.toggle&&Bms.mouseReleased) {mdown = true;mup = false;}
+			if(!Bms.mouseReleased){mdown = false;mup = true;}
 		}else {
-			if(pos(m)&&applet.mousePressed) {mdown = true;mup = false;}
-			if(!applet.mousePressed){mdown = false;mup = true;}
+			if(pos(m)&&Bms.mouseReleased) {mdown = true;mup = false;}
+			if(!Bms.mouseReleased){mdown = false;mup = true;}
 		}
 
 		if(mdown&&!toggle||mup&&toggle) {
@@ -1013,56 +1054,56 @@ public class Button{
 			}catch (NoSuchFieldException e) {
 			}catch (IllegalAccessException e) {
 			}}
-		if(!applet.mousePressed)mdown = false;
+		if(Bms.mouseReleased)mdown = false;
 	};
 
 
-	public boolean mousePressed() {
-		boolean k = false;
-		PVector n = new PVector(applet.mouseX,applet.mouseY);
-		if(mouse!=null)n = mouse;
-		if(parent!=null) {
-			if (parent.toggle&&pos(n)&&applet.mousePressed&&!mdown)mdown = true;
-			if(mdown&&!m2down){
-				k = true;
-				m2down = true;
-			}
-		}else {
-			if (pos(n)&&applet.mousePressed&&!mdown)mdown = true;
-			if(mdown&&!m2down){
-				k = true;
-				m2down = true;
-			}
-		}
-
-		if(!applet.mousePressed){
-			mdown = false;
-			m2down = false;
-		}
-		return k;
-
-	};
+	//	public boolean mousePressed() {
+	//		boolean k = false;
+	//		PVector n = new PVector(applet.mouseX,applet.mouseY);
+	//		if(mouse!=null)n = mouse;
+	//		if(parent!=null) {
+	//			if (parent.toggle&&pos(n)&&Bms.mouseReleased&&!mdown)mdown = true;
+	//			if(mdown&&!m2down){
+	//				k = true;
+	//				m2down = true;
+	//			}
+	//		}else {
+	//			if (pos(n)&&Bms.mouseReleased&&!mdown)mdown = true;
+	//			if(mdown&&!m2down){
+	//				k = true;
+	//				m2down = true;
+	//			}
+	//		}
+	//
+	//		if(!Bms.mouseReleased){
+	//			mdown = false;
+	//			m2down = false;
+	//		}
+	//		return k;
+	//
+	//	};
 
 	public boolean mousePressed(PVector m) {
 		boolean k = false;
 		PVector n = new PVector(applet.mouseX,applet.mouseY);
 		if(m==null)n = mouse;
 		if(parent!=null) {
-			if (parent.toggle&&pos(m)&&applet.mousePressed&&!mdown)mdown = true;
+			if (parent.toggle&&pos(m)&&Bms.mouseReleased&&!mdown)mdown = true;
 			if(mdown&&!m2down){
 				m2down = true;
 				k = true;
 			}
 
 		}else {
-			if (pos(m)&&applet.mousePressed&&!mdown)mdown = true;
+			if (pos(m)&&Bms.mouseReleased&&!mdown)mdown = true;
 			if(mdown&&!m2down){
 				m2down = true;
 				k = true;
 			}
 		}
 
-		if(!applet.mousePressed){
+		if(Bms.mouseReleased){
 			mdown = false;
 			m2down = false;
 		}
@@ -1086,7 +1127,7 @@ public class Button{
 
 		return toggle;
 	};
-	
+
 	public boolean toggle() {
 		click();
 		return toggle;
@@ -1096,10 +1137,11 @@ public class Button{
 		click(m);
 		return toggle;
 	};
-	
+
 	public boolean toggleD(Object a, String b){
 		boolean k = clickD();
 		if(parent!=null&&parent.toggle&&k||parent==null&&k) {
+			applet.println("button toggled os");
 			Field field = null;
 
 			try{
@@ -1112,7 +1154,7 @@ public class Button{
 			}catch (NoSuchFieldException e) {
 			}catch (IllegalAccessException e) {
 			}}
-		if(!applet.mousePressed){
+		if(Bms.mouseReleased){
 			mdown = false;
 		}
 		return k;
@@ -1121,6 +1163,7 @@ public class Button{
 	public void toggleD(Object a, String b,PGraphics c){
 		if(parent!=null){
 			if(parent.toggle&&clickD(mouse)){
+				applet.println("button toggled os");
 				Field field = null;
 
 				try{
@@ -1153,14 +1196,15 @@ public class Button{
 						}catch (IllegalAccessException e) {
 							PApplet.println("p ia",c,a,b);
 						}}}
-		if(!applet.mousePressed)mdown = false;
+		if(Bms.mouseReleased)mdown = false;
 	};
 
 	public boolean toggleD(Object a, String b,PVector m){
-		
+
 		if(m==null)m = new PVector(applet.mouseX,applet.mouseY);
 		boolean k = clickD(m);
 		if(parent!=null&&parent.toggle&&k||parent==null&&k){
+			applet.println("button toggled osp");
 			Field field = null;
 
 			try{
@@ -1176,7 +1220,7 @@ public class Button{
 			}catch (IllegalAccessException e) {
 				PApplet.println("toggle pv np ia",m,a,b);
 			}}
-		if(!applet.mousePressed)mdown = false;
+		if(Bms.mouseReleased)mdown = false;
 		return k;
 	};
 
@@ -1184,6 +1228,7 @@ public class Button{
 		if(m==null)m = new PVector(applet.mouseX,applet.mouseY);
 		if(parent!=null){
 			if(parent.toggle&&clickD(m)){
+				applet.println("button toggled ospb");
 				Field field = null;
 
 				try{
@@ -1221,13 +1266,14 @@ public class Button{
 						}catch (IllegalAccessException e) {
 							PApplet.println("toggle pv p ia",m,a,b);
 						}}}
-		if(!applet.mousePressed)mdown = false;
+		if(Bms.mouseReleased)mdown = false;
 	};
 
 
 	public boolean toggleU(Object a, String b){
 		boolean k = click();
 		if(parent!=null&&parent.toggle&&k||parent==null&&k) {
+			applet.println("button toggleu os");
 			Field field = null;
 
 			try{
@@ -1281,11 +1327,12 @@ public class Button{
 	};
 
 	public boolean toggleU(Object a, String b,PVector m){
-		
+
 		if(m==null)m = new PVector(applet.mouseX,applet.mouseY);
 		boolean k = click(m);
-		
+
 		if(parent!=null&&parent.toggle&&k||parent==null&&k){
+			applet.println("button toggleu osp");
 			Field field = null;
 
 			try{
@@ -1346,9 +1393,10 @@ public class Button{
 							PApplet.println("toggle pv p ia",m,a,b);
 						}}}
 	};
-	
+
 	public boolean toggle(Object a, String b){
 		boolean k = click();
+		if(parentTab==null||parentTab!=null&&parentTab.visible&&parentTab.toggle)
 		if(parent!=null&&parent.toggle&&k||parent==null&&k) {
 			Field field = null;
 
@@ -1403,10 +1451,12 @@ public class Button{
 	};
 
 	public boolean toggle(Object a, String b,PVector m){
-		
+
 		if(m==null)m = new PVector(applet.mouseX,applet.mouseY);
 		boolean k = click(m);
+		if(parentTab==null||parentTab!=null&&parentTab.visible&&parentTab.toggle)
 		if(parent!=null&&parent.toggle&&k||parent==null&&k){
+			applet.println("button toggle osp");
 			Field field = null;
 
 			try{
@@ -1456,8 +1506,8 @@ public class Button{
 							field = a.getClass().getField(b); 
 							field = a.getClass().getField(b); 
 							boolean k1 = field.getBoolean(a);
-//							if(toggle&&!k1)toggle = false;
-//							else if(!toggle&&k)toggle = true;
+							//							if(toggle&&!k1)toggle = false;
+							//							else if(!toggle&&k)toggle = true;
 							field.set(a, toggle); 
 						}catch (NullPointerException e) {
 							PApplet.println("toggle pv p np",m,a,b);
@@ -1558,15 +1608,15 @@ public class Button{
 
 				field = a.getClass().getField(b); 
 
-					field.set(a, toggle);
-					//applet.println("button ",next,a," ");
-				}catch (NoSuchFieldException e) {
-					PApplet.println("nsf");
-				}catch (NullPointerException e) {
-					PApplet.println("npe");
-				}catch (IllegalAccessException e) {
-					PApplet.println("iae");
-				}
+				field.set(a, toggle);
+				//applet.println("button ",next,a," ");
+			}catch (NoSuchFieldException e) {
+				PApplet.println("nsf");
+			}catch (NullPointerException e) {
+				PApplet.println("npe");
+			}catch (IllegalAccessException e) {
+				PApplet.println("iae");
+			}
 
 			for(int i=0;i<c.length;i++){
 				String next = c[i];
@@ -1589,7 +1639,7 @@ public class Button{
 
 	public void cycle(int b){
 		if(parent!=null){
-			if(pos() && parent.toggle&&applet.mousePressed&&!mdown){
+			if(pos() && parent.toggle&&Bms.mouseReleased&&!mdown){
 				mdown = true;
 				counter ++;
 
@@ -1597,14 +1647,14 @@ public class Button{
 			}
 		}
 
-		if(!applet.mousePressed){
+		if(!Bms.mouseReleased){
 			mdown = false;
 		}
 	};
 
 	public void cycle(int b,PVector m){
 		if(parent!=null){
-			if(pos(m) && parent.toggle&&applet.mousePressed&&!mdown){
+			if(pos(m) && parent.toggle&&Bms.mouseReleased&&!mdown){
 				mdown = true;
 				counter ++;
 
@@ -1612,14 +1662,14 @@ public class Button{
 			}
 		}
 
-		if(!applet.mousePressed){
+		if(!Bms.mouseReleased){
 			mdown = false;
 		}
 	};
 
 	public void cycle(int b,PGraphics canvas){
 		if(parent!=null){
-			if(pos(mouse) && parent.toggle&&applet.mousePressed&&!mdown){
+			if(pos(mouse) && parent.toggle&&Bms.mouseReleased&&!mdown){
 				mdown = true;
 				counter ++;
 
@@ -1627,7 +1677,7 @@ public class Button{
 			}
 		}
 
-		if(!applet.mousePressed){
+		if(!Bms.mouseReleased){
 			mdown = false;
 		}
 	};
@@ -1637,17 +1687,17 @@ public class Button{
 		else mouse = new PVector(applet.mouseX,applet.mouseY);
 
 		if(parent!=null){
-			if(pos(mouse)&&parent.toggle&&counter<c&&applet.mousePressed&&!mdown){
+			if(pos(mouse)&&parent.toggle&&counter<c&&Bms.mouseReleased&&!mdown){
 				counter ++;
 				mdown = true;
 				PApplet.println("button cycle mdown");
 			}
 
-			if(pos(mouse)&&parent.toggle&&counter==c&&applet.mousePressed&&!mdown){
+			if(pos(mouse)&&parent.toggle&&counter==c&&Bms.mouseReleased&&!mdown){
 				counter = 0;
 				mdown = true;
 			}
-			if(!applet.mousePressed)mdown = false;
+			if(Bms.mouseReleased)mdown = false;
 
 			if(pos(mouse) && mdown&&!mdown1){
 
@@ -1668,18 +1718,18 @@ public class Button{
 				}}}
 		else {
 
-			if(pos(mouse)&&applet.mousePressed&&counter<c&&!mdown){
+			if(pos(mouse)&&Bms.mouseReleased&&counter<c&&!mdown){
 				counter ++;
 				mdown = true;
 				PApplet.println("button cycle mdown");
 			}
 
-			else if(pos(mouse)&&applet.mousePressed&&counter==c&&!mdown){
+			else if(pos(mouse)&&Bms.mouseReleased&&counter==c&&!mdown){
 				counter = 0;
 				mdown = true;
 				PApplet.println("button cycle mdown");
 			}
-			if(!applet.mousePressed)mdown = false;
+			if(Bms.mouseReleased)mdown = false;
 
 			if(pos(mouse) && mdown&&!mdown1){
 				mdown1 = true;
@@ -1698,7 +1748,7 @@ public class Button{
 				}
 			}
 		}
-		if(!applet.mousePressed) {
+		if(!Bms.mouseReleased) {
 			mdown = false;
 			mdown1 = false;
 		}
@@ -1707,7 +1757,7 @@ public class Button{
 	public void cycle(Object a,String b,int c,PVector mouse) {
 		if(mouse==null)mouse = new PVector(applet.mouseX,applet.mouseY);
 		if(parent!=null){
-			if(pos(mouse)&&parent.toggle&&applet.mousePressed&&!mdown){
+			if(pos(mouse)&&parent.toggle&&Bms.mouseReleased&&!mdown){
 				mdown = true;
 				PApplet.println("button cycle pv mdown");
 			}
@@ -1730,16 +1780,16 @@ public class Button{
 				}}}
 		else {
 
-			if(pos(mouse)&&applet.mousePressed&&counter<c&&!mdown){
+			if(pos(mouse)&&Bms.mouseReleased&&counter<c&&!mdown){
 				counter++;
 				mdown = true;
 			}
 
-			else if(pos(mouse)&&applet.mousePressed&&counter==c&&!mdown){
+			else if(pos(mouse)&&Bms.mouseReleased&&counter==c&&!mdown){
 				counter = 0;
 				mdown = true;
 			}
-			if(!applet.mousePressed)mdown = false;
+			if(Bms.mouseReleased)mdown = false;
 
 			if(pos(mouse) && mdown&&!mdown1){
 				mdown1 = true;
@@ -1758,7 +1808,7 @@ public class Button{
 				}
 			}
 		}
-		if(!applet.mousePressed) {
+		if(!Bms.mouseReleased) {
 			mdown = false;
 			mdown1 = false;
 		}
@@ -1797,18 +1847,20 @@ public class Button{
 	};
 
 	public void highlight(){
-
+		hover = false;
 		if(toggle){
 			col = toggleCol;
 			if(globalTheme&&!localFill)col = Bms.toggleCol;
 			if(pos()){
-
+				hover = true;
 				col = hcol;
 				if(globalTheme&&!localFill)col = Bms.hcol;
+				
 			}
 		}else{
 
 			if(pos()){
+				hover = true;
 				col = hcol;
 				if(globalTheme&&!localFill)col = Bms.hcol;
 			}else{
@@ -1820,24 +1872,29 @@ public class Button{
 	};
 
 	public void highlight(PVector m){
-
+		hover = false;
 		if(toggle){
 			col = toggleCol;
 			if(globalTheme&&!localFill)col = Bms.toggleCol;
-			if(pos(mouse)){
-
+			if(pos(m)){
+				hover = true;
 				col = hcol;
 				if(globalTheme&&!localFill)col = Bms.hcol;
 			}
 		}else{
 			col = fcol;
 			if(globalTheme&&!localFill)col = Bms.fcol;
-			if(pos(mouse)){
-
+			if(pos(m)){
+				hover = true;
 				col = hcol;
 				if(globalTheme&&!localFill)col = Bms.hcol;
 			}
 		}
+		if(hover&&Bms.mouseReleased) {
+			clicku = true;
+			
+		}else clicku = false;
+		if(clicku)applet.println("btn highlight clicku",toggle);
 	};
 
 	public void setRadio() {
@@ -2012,8 +2069,17 @@ public class Button{
 		tcol = b;
 		localText = true;
 	};
-	
-	
+
+	public void setTab(tab t) {
+		Bms = t.Bms;
+		applet = t.applet;
+		parentCanvas = true;
+		parentTab = t;
+		canvas = t.canvas;
+
+	};
+
+
 
 };
 

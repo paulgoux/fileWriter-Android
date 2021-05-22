@@ -5,7 +5,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class TextArea{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public float x,y,w,h,bx,by,textSize = 12,spacing = 2,txoff,tyoff,lxpos,r1,r2,r3,r4;
 	public int last,lines,xpos,ypos;
@@ -19,7 +19,7 @@ public class TextArea{
 	public PGraphics canvas,parentCanvas;
 	tab parentTab;
 
-	public TextArea(float x_,float y_,float w_,float h_,BMScontrols bms) {
+	public TextArea(float x_,float y_,float w_,float h_,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		x = x_;
@@ -36,7 +36,7 @@ public class TextArea{
 
 	};
 
-	public TextArea(float x_,float y_,float w_,float h_,String Label,BMScontrols bms) {
+	public TextArea(float x_,float y_,float w_,float h_,String Label,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		label = Label;

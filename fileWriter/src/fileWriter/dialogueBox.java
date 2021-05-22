@@ -4,16 +4,16 @@ import processing.core.PApplet;
 
 public class dialogueBox{
 
-	public BMScontrols Bms;
+	public BMS Bms;
 	public PApplet applet;
 	public float x,bx,y,by,w,h;
 	public tab main;
-	public Button ok,no,close,cancel,help,browse;
+	public Button ok,no,close,cancel,help,browse,title;
 	public Dropdown choice;
 	boolean state,dialogueChoice;
 
 
-	public dialogueBox(float a,float b,float c,float d,BMScontrols bms){
+	public dialogueBox(float a,float b,float c,float d,BMS bms){
 		x = a;
 		y = b;
 		w = c;
@@ -26,7 +26,7 @@ public class dialogueBox{
 
 	};
 
-	public dialogueBox(float a,float b,float c,float d,String s,BMScontrols bms){
+	public dialogueBox(float a,float b,float c,float d,String s,BMS bms){
 		x = a;
 		y = b;
 		w = c;
@@ -35,7 +35,7 @@ public class dialogueBox{
 		applet = bms.applet;
 		main = new tab(x,y,w,h,s,bms);
 		main.toggle = true;
-
+		title = main.title;
 
 	};
 

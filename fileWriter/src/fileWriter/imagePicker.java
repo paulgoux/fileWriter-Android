@@ -15,7 +15,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class imagePicker extends Activity {
-   public BMScontrols Bms;
+   public BMS Bms;
    public PApplet p;
    public Activity activity;
    public Context context;
@@ -23,7 +23,7 @@ public class imagePicker extends Activity {
    public boolean image_loaded;
    public Permission storage;
 
-   public imagePicker(BMScontrols bms) {
+   public imagePicker(BMS bms) {
       this.Bms = bms;
       this.p = bms.applet;
       this.storage = new Permission(this.p, "WRITE_EXTERNAL_STORAGE");

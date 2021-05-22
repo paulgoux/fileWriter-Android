@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Letter{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	int id,vpos,hpos;
 	float x,y,w,h,tsize;
@@ -12,7 +12,7 @@ public class Letter{
 	int col,col2;
 	boolean visible = true;
 
-	public Letter(String ll,float xx, float yy,BMScontrols bms){
+	public Letter(String ll,float xx, float yy,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		x = xx;

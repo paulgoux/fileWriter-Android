@@ -3,12 +3,12 @@ package fileWriter;
 import processing.core.PApplet;
 
 public class Point{
-	public BMScontrols Bms;
+	public BMS Bms;
 	public PApplet applet;
 	public float x,y;
 	public int id;
 
-	public Point(float X, float Y,int Id,BMScontrols bms){
+	public Point(float X, float Y,int Id,BMS bms){
 		Bms = bms;
 		this.applet = bms.applet;
 		x = X;

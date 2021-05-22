@@ -7,7 +7,7 @@ import processing.core.PGraphics;
 import processing.opengl.PShader;
 
 public class BMScamera{
-	  public BMScontrols Bms;
+	  public BMS Bms;
 	  public KetaiCamera cam ;
 	  public tab settings;
 	  public PApplet applet;
@@ -18,7 +18,7 @@ public class BMScamera{
 	  float mult = 0.0f,counter = 0.0f;
 	  public imageSaver output;
 	  
-	  public BMScamera(BMScontrols bms){
+	  public BMScamera(BMS bms){
 			Bms = bms;
 			applet = bms.applet;
 			camPermission = new Permission(applet,"CAMERA");
@@ -51,7 +51,7 @@ public class BMScamera{
 		    output = new imageSaver(applet);
 		  };
 	  
-	  public BMScamera(BMScontrols bms,int w,int h){
+	  public BMScamera(BMS bms,int w,int h){
 			Bms = bms;
 			applet = bms.applet;
 			camPermission = new Permission(applet,"CAMERA");
@@ -85,7 +85,7 @@ public class BMScamera{
 		    output = new imageSaver(applet);
 		  };
 	  
-	  public BMScamera(int w,int h,BMScontrols bms){
+	  public BMScamera(int w,int h,BMS bms){
 			Bms = bms;
 			applet = bms.applet;
 			camPermission = new Permission(applet,"CAMERA");
@@ -118,7 +118,7 @@ public class BMScamera{
 		    output = new imageSaver(applet);
 		  };
 		  
-	  BMScamera(PApplet applet,int w,int h,BMScontrols bms){
+	  BMScamera(PApplet applet,int w,int h,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 	    cam = new KetaiCamera(applet, w, h, 60);
@@ -191,7 +191,7 @@ public class BMScamera{
 	    settings.sliderv.set(0,100);
 	  };
 	  
-	  void setBms(BMScontrols bms) {
+	  void setBms(BMS bms) {
 		  
 		  Bms = bms;
 		  applet = bms.applet;

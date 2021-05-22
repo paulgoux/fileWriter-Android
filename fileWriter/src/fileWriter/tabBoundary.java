@@ -8,80 +8,80 @@ import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 
-class tabBoundary{
-	BMScontrols Bms;
+public class tabBoundary{
+	BMS Bms;
 	PApplet applet;
 	float x1,x2,y1,y2,w,h,x3,y3,size = 1,x4,y4,D1,D2,T1,T2,collision_index,menux,menuy,deltamx,deltamy,tacx,tacy,dir;
 	float x,y,bx = x,by = y;
 	public float mass,vx,vy,ax,ay,density,friction_u,momentum,bax ,bay,pathWidth=20,
 			gconst = 0.1f,floor = 590,rtheta = 0,avoidance,cohesion;
-	PVector p1,midpoint1,midpoint2,midpoint3,m;
-	PVector p2,p3,p4,center,vel,ac,rotatep;
-	int key1,key2,type,t,t2,vert,vert1,vert3,trit,id,index,lindex,sindex,ccount,sid,vcount,hcount,uindex = -1,
+	public PVector p1,midpoint1,midpoint2,midpoint3,m;
+	public PVector p2,p3,p4,center,vel,ac,rotatep;
+	public int key1,key2,type,t,t2,vert,vert1,vert3,trit,id,index,lindex,sindex,ccount,sid,vcount,hcount,uindex = -1,
 			counter,tpoints,mcount,sides,shapeIndex,lineIndex,lcount,pcount,options = -1,numm,state,state1=1;
 	public int cols = 40,rows = 25;
 	public boolean toggle = false,mdown,mup = true,circle,square,bezier,tri,c_poligon,poligon,drag,none,spline,hover,hover2,point1,point2,point3,point4,gravity,hidemenu,clear,
 			edit,complex,cstart,showgrid,cfinish = false,border,fill,hidden,connectedlines,path,
 			avoidtabBoundary,cohesiontabBoundary,amendtabBoundary,amendInnertabBoundary,
 			amendCohesion,amendAvoidance,dashed;
-	boolean linedown = false,sdown,rtoggle,click,open,dynamic = true,falling = true,rotating,update,lock,pdown,
+	public boolean linedown = false,sdown,rtoggle,click,open,dynamic = true,falling = true,rotating,update,lock,pdown,
 			updatep,updateg,tdown,trow,menudown,pointadded,converted,rdown,phover,lhover,contextClick,visible = true;
-	float dx,dy,Theta,Norm;
-	int col,bg;
-	ArrayList<Integer> indices = new ArrayList<Integer>();
-	ArrayList<Button> Buttons = new ArrayList<Button>();
-	ArrayList<tabBoundary> Boundaries = new ArrayList<tabBoundary>();
-	ArrayList<tabBoundary> innerBoundaries = new ArrayList<tabBoundary>();
-	ArrayList<tabBoundary> outerBoundaries = new ArrayList<tabBoundary>();
-	ArrayList<PVector> points = new ArrayList<PVector>();
-	ArrayList<PVector> rotation_points = new ArrayList<PVector>();
-	Scene scene;
-	ArrayList<Scene> scenes = new ArrayList<Scene>();
-	tabBoundary parent;
-	tabBoundary child;
-	PShape bpath;
-	ArrayList<PShape> paths = new ArrayList<PShape>();
-	ArrayList<Float[]> velocity = new ArrayList<Float[]>();
-	ArrayList<PVector> velocitypv = new ArrayList<PVector>();
-	ArrayList<tabBoundary> Quadrants = new ArrayList<tabBoundary>();
-	ArrayList<PVector> Midpoints = new ArrayList<PVector>();
-	ArrayList<PVector> collision_array = new ArrayList<PVector>();
+	public float dx,dy,Theta,Norm;
+	public int col,bg;
+	public ArrayList<Integer> indices = new ArrayList<Integer>();
+	public ArrayList<Button> Buttons = new ArrayList<Button>();
+	public ArrayList<tabBoundary> Boundaries = new ArrayList<tabBoundary>();
+	public ArrayList<tabBoundary> innerBoundaries = new ArrayList<tabBoundary>();
+	public ArrayList<tabBoundary> outerBoundaries = new ArrayList<tabBoundary>();
+	public ArrayList<PVector> points = new ArrayList<PVector>();
+	public ArrayList<PVector> rotation_points = new ArrayList<PVector>();
+	public Scene scene;
+	public ArrayList<Scene> scenes = new ArrayList<Scene>();
+	public tabBoundary parent;
+	public tabBoundary child;
+	public PShape bpath;
+	public ArrayList<PShape> paths = new ArrayList<PShape>();
+	public ArrayList<Float[]> velocity = new ArrayList<Float[]>();
+	public ArrayList<PVector> velocitypv = new ArrayList<PVector>();
+	public ArrayList<tabBoundary> Quadrants = new ArrayList<tabBoundary>();
+	public ArrayList<PVector> Midpoints = new ArrayList<PVector>();
+	public ArrayList<PVector> collision_array = new ArrayList<PVector>();
 
-	String []contextlabels = {"Undo","Redo"};
-	String []contextDellabels = {"Delete Point","Cancel"};
-	String []palletelabels = {"Fill","Gravity","Friction","Velocity","Connect","Amend B","Amend iB","Avoid","Seek",
+	public String []contextlabels = {"Undo","Redo"};
+	public String []contextDellabels = {"Delete Point","Cancel"};
+	public String []palletelabels = {"Fill","Gravity","Friction","Velocity","Connect","Amend B","Amend iB","Avoid","Seek",
 			"Follow","Dashed","Border","Clear","Visible","Grid","Hide","Edit","Reset"};
-	String []complexmenu = {"Finish"};
-	String []convertmenu = {"Convert","Delete Shape"};
-	String []connectedlMenul = {"Convert","Delete Line","Delete Shape"};
+	public String []complexmenu = {"Finish"};
+	public String []convertmenu = {"Convert","Delete Shape"};
+	public String []connectedlMenul = {"Convert","Delete Line","Delete Shape"};
 
-	Menu palletehide,context,contextDel,pallete,complexsub,convertToPath,connectedlMenu;
-	String [] settingsLabel = {"Cohesion","Avoidance"};
-	sliderBox settings;
+	public Menu palletehide,context,contextDel,pallete,complexsub,convertToPath,connectedlMenu;
+	public String [] settingsLabel = {"Cohesion","Avoidance"};
+	public sliderBox settings;
 
-	TextBox Sides;
-	ArrayList<Float> norm = new ArrayList<Float>();
-	ArrayList<Float[]> mdist = new ArrayList<Float[]>();
-	ArrayList<Float[]> pdist = new ArrayList<Float[]>();
-	ArrayList<Float> dist = new ArrayList<Float>();
-	ArrayList<Integer> types = new ArrayList<Integer>();
-	ArrayList<Float> theta = new ArrayList<Float>();
-	ArrayList<Float> mtheta = new ArrayList<Float>();
-	ArrayList<PVector> temp = new ArrayList<PVector>();
-	ArrayList<ArrayList> polytemp = new ArrayList<ArrayList>();
-	HashMap<String,Boolean> values = new HashMap<String,Boolean>();
+	public TextBox Sides;
+	public ArrayList<Float> norm = new ArrayList<Float>();
+	public ArrayList<Float[]> mdist = new ArrayList<Float[]>();
+	public ArrayList<Float[]> pdist = new ArrayList<Float[]>();
+	public ArrayList<Float> dist = new ArrayList<Float>();
+	public ArrayList<Integer> types = new ArrayList<Integer>();
+	public ArrayList<Float> theta = new ArrayList<Float>();
+	public ArrayList<Float> mtheta = new ArrayList<Float>();
+	public ArrayList<PVector> temp = new ArrayList<PVector>();
+	public ArrayList<ArrayList> polytemp = new ArrayList<ArrayList>();
+	public HashMap<String,Boolean> values = new HashMap<String,Boolean>();
 
-	PVector polymidpoint;
-	ArrayList<Point> grid = new ArrayList<Point>();
-	ArrayList<Point> ugrid = new ArrayList<Point>();
-	ArrayList<Point> ogrid = new ArrayList<Point>();
+	public PVector polymidpoint;
+	public ArrayList<Point> grid = new ArrayList<Point>();
+	public ArrayList<Point> ugrid = new ArrayList<Point>();
+	public ArrayList<Point> ogrid = new ArrayList<Point>();
 
-	tabBoundary(){
+	public tabBoundary(){
 
 
 	};
 
-	tabBoundary(BMScontrols bms){
+	public tabBoundary(BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		palletehide = new Menu(0,200+300/2 - 100,20,50,bms);
@@ -96,7 +96,7 @@ class tabBoundary{
 
 	};
 
-	tabBoundary(float X1, float Y1,float X2, float Y2){
+	public tabBoundary(float X1, float Y1,float X2, float Y2){
 
 		x1 = X1;
 		y1 = Y1;
@@ -109,7 +109,7 @@ class tabBoundary{
 
 	};
 
-	tabBoundary(float X1, float Y1,float X2, float Y2,BMScontrols bms){
+	public tabBoundary(float X1, float Y1,float X2, float Y2,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 
@@ -124,7 +124,7 @@ class tabBoundary{
 
 	};
 
-	tabBoundary(float X1, float Y1,float ww,float hh,int Type,BMScontrols bms){
+	public tabBoundary(float X1, float Y1,float ww,float hh,int Type,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		float t1 = 0;
@@ -320,7 +320,7 @@ class tabBoundary{
 		create_rotation_points(Boundaries);
 	};
 
-	tabBoundary(float X1, float Y1,float ww,float hh,int Type){
+	public tabBoundary(float X1, float Y1,float ww,float hh,int Type){
 
 		float t1 = 0;
 		x1 = X1;
@@ -515,7 +515,7 @@ class tabBoundary{
 		create_rotation_points(Boundaries);
 	};
 
-	tabBoundary (float X1, float Y1,float X2,float Y2,float X3, float Y3){
+	public tabBoundary (float X1, float Y1,float X2,float Y2,float X3, float Y3){
 
 		x1 = X1;
 		y1 = Y1;
@@ -526,7 +526,7 @@ class tabBoundary{
 		type = 3;
 	};
 
-	tabBoundary(PVector A, PVector B,PVector C){
+	public tabBoundary(PVector A, PVector B,PVector C){
 
 		p1 = A;
 		p2 = B;
@@ -538,7 +538,7 @@ class tabBoundary{
 		type = 3;
 	};
 
-	tabBoundary(PVector A, PVector B){
+	public tabBoundary(PVector A, PVector B){
 
 		p1 = A;
 		p2 = B;
@@ -548,7 +548,7 @@ class tabBoundary{
 		y2 = p2.y;
 	};
 
-	tabBoundary(ArrayList<Point> A){
+	public tabBoundary(ArrayList<Point> A){
 
 		center = new PVector (0,0);
 		for(int i=0;i<A.size();i++){
@@ -571,7 +571,7 @@ class tabBoundary{
 		type = 105;
 	};
 
-	tabBoundary(ArrayList<Point> A,int k){
+	public tabBoundary(ArrayList<Point> A,int k){
 
 		center = new PVector (0,0);
 		for(int i=0;i<A.size();i++){
@@ -605,7 +605,7 @@ class tabBoundary{
 		type = 106;
 	};
 
-	tabBoundary(tabBoundary B){
+	public tabBoundary(tabBoundary B){
 
 		//Boundaries = B.Boundaries;
 
@@ -716,7 +716,7 @@ class tabBoundary{
 		}
 	};
 
-	Point getNextPoint(ArrayList<Point> a,Point b){
+	public Point getNextPoint(ArrayList<Point> a,Point b){
 		Point c = null;
 		for(int i=0;i<a.size();i++){
 			Point d = a.get(i);
@@ -2315,7 +2315,7 @@ class tabBoundary{
 
 	};
 
-	Boolean posWindow(){
+	public Boolean posWindow(){
 
 		float mx = applet.mouseX;
 		float my = applet.mouseY;
@@ -2342,7 +2342,7 @@ class tabBoundary{
 	};
 
 
-	PVector check_intersect(tabBoundary a, tabBoundary b){
+	public PVector check_intersect(tabBoundary a, tabBoundary b){
 
 		float a1 = a.y2 - a.y1;
 		float b1 = a.x1 - a.x2;
@@ -2379,7 +2379,7 @@ class tabBoundary{
 			}}
 	};
 
-	PVector check_intersect2(tabBoundary a, tabBoundary b){
+	public PVector check_intersect2(tabBoundary a, tabBoundary b){
 
 		float a1 = a.y2 - a.y1;
 		float b1 = a.x1 - a.x2;

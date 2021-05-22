@@ -9,7 +9,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class TextBox {
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	int id, cols, rows, size, t, timer = 31,timer2 = 201, blkrate = 30, t1 = blkrate, t2 = blkrate, start, end, hcount,
 			index, lindex, vindex = -1, hindex = -1, windex, vpos = 0, hpos, sltcounter, vcount = 0,delay=10,
@@ -81,7 +81,7 @@ public class TextBox {
 		toolBox = new Menu(x+1, y-20, 200-1, 20);
 	};
 
-	public TextBox(float X, float Y, float WW, float HH, int Cols,BMScontrols bms) {
+	public TextBox(float X, float Y, float WW, float HH, int Cols,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -104,7 +104,7 @@ public class TextBox {
 		//toolBox.setBms(bms);
 	};
 
-	public TextBox(float X, float Y, float WW, float HH, int Cols, String Label,BMScontrols bms) {
+	public TextBox(float X, float Y, float WW, float HH, int Cols, String Label,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;

@@ -9,7 +9,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Slider{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public int id = -1,type,functionId;
 	public float x,y,w,h,bx,by,bw,bh,valuex,valuey,btnw,btnh, value = 0,txoff,tyoff,spacing = 20,tsize = 12,ssize,
@@ -50,7 +50,7 @@ public class Slider{
 
 	};
 
-	public Slider(float xx,float yy, float ww, float hh,BMScontrols bms) {
+	public Slider(float xx,float yy, float ww, float hh,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -75,7 +75,7 @@ public class Slider{
 
 	};
 
-	public Slider(float xx,float yy, float ww, float hh,BMScontrols bms,boolean b1) {
+	public Slider(float xx,float yy, float ww, float hh,BMS bms,boolean b1) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -122,7 +122,7 @@ public class Slider{
 
 	};
 
-	public Slider(float xx,float yy, float ww, float hh,String Label,BMScontrols bms) {
+	public Slider(float xx,float yy, float ww, float hh,String Label,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -1498,7 +1498,7 @@ public class Slider{
 		}
 	};
 
-	public void setBms(BMScontrols bms) {
+	public void setBms(BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		initColors();
@@ -1559,5 +1559,12 @@ public class Slider{
 		radio = false;
 		bar = true;
 		square = false;
+	};
+	
+	public void setTab(tab t) {
+		Bms = t.Bms;
+		applet = t.applet;
+		parentCanvas = true;
+		parentTab = t;
 	};
 };

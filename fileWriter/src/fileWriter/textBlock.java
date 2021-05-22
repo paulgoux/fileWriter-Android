@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class textBlock{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	boolean parentCanvas;
 	public boolean vertical,horizontal,border ;
@@ -15,7 +15,7 @@ public class textBlock{
 	public String line;
 	public int col;
 
-	public textBlock(float x,float y,float w,float h,BMScontrols bms) {
+	public textBlock(float x,float y,float w,float h,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -32,7 +32,7 @@ public class textBlock{
 
 	};
 
-	public textBlock(float x,float y,float w,float h,String[] s,BMScontrols bms) {
+	public textBlock(float x,float y,float w,float h,String[] s,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -49,7 +49,7 @@ public class textBlock{
 		text = s;
 	};
 
-	public textBlock(float x,float y,float w,float h,String s,BMScontrols bms) {
+	public textBlock(float x,float y,float w,float h,String s,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import processing.core.*;
 
 public class tab extends tabBoundary {
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	public PGraphics canvas,canvas2;
 	public  float x, y, w, h,bx,by,bh,bw,r1,r2,r3,r4,transparency,bbx,bby,textSize = 12,borderSize;
@@ -18,7 +18,7 @@ public class tab extends tabBoundary {
 	public PVector mouse,mouse2;
 	public Dock parentDock; 
 	PFont myFont;
-	
+
 	public ArrayList<PGraphics> canvases = new ArrayList<PGraphics>();
 
 	public ArrayList<Window> windows = new ArrayList<Window>();
@@ -62,7 +62,7 @@ public class tab extends tabBoundary {
 	boolean sliderset, displayChild, init, setTab,slidersUpdated;
 	public Button title;
 
-	public tab( float x, float y, float w, float h,int k,BMScontrols bms) {
+	public tab( float x, float y, float w, float h,int k,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -77,7 +77,7 @@ public class tab extends tabBoundary {
 		tabcol = applet.color(0,255,175);
 	};
 
-	public tab( float x, float y, float w, float h,BMScontrols bms) {
+	public tab( float x, float y, float w, float h,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -92,7 +92,7 @@ public class tab extends tabBoundary {
 		createConstruct();
 	};
 
-	public tab( float x, float y, float w, float h,Slider s,BMScontrols bms) {
+	public tab( float x, float y, float w, float h,Slider s,BMS bms) {
 
 
 		this.x = x;
@@ -106,7 +106,7 @@ public class tab extends tabBoundary {
 		tabcol = applet.color(0,255,175);
 	};
 
-	public tab( float x, float y, float w, float h,Boundary b,BMScontrols bms) {
+	public tab( float x, float y, float w, float h,Boundary b,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -120,7 +120,7 @@ public class tab extends tabBoundary {
 		tabcol = applet.color(0,255,175);
 	};
 
-	public tab( float x, float y, float w, float h, String label,int k,BMScontrols bms) {
+	public tab( float x, float y, float w, float h, String label,int k,BMS bms) {
 		//super();
 		this.x = x;
 		this.y = y;
@@ -141,7 +141,7 @@ public class tab extends tabBoundary {
 		createConstruct();
 	};
 
-	public tab( float x, float y, float w, float h, String label,BMScontrols bms) {
+	public tab( float x, float y, float w, float h, String label,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -161,7 +161,7 @@ public class tab extends tabBoundary {
 		createConstruct();
 	};
 
-	public tab( float x, float y, float w, float h, String label,float w1,float h1,BMScontrols bms) {
+	public tab( float x, float y, float w, float h, String label,float w1,float h1,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -181,7 +181,7 @@ public class tab extends tabBoundary {
 		createConstruct();
 	};
 
-	public tab( float x, float y, float w, float h, String label,boolean n,BMScontrols bms) {
+	public tab( float x, float y, float w, float h, String label,boolean n,BMS bms) {
 
 		this.x = x;
 		this.y = y;
@@ -311,43 +311,43 @@ public class tab extends tabBoundary {
 		scrollable = true;
 		vscroll = true;
 	};
-	
+
 	PGraphics createCanvas() {
 		PGraphics pg = applet.createGraphics((int) (w), (int)(h));
 		canvases.add(pg);
-//		states.get(0).canvases.add(canvas);
+		//		states.get(0).canvases.add(canvas);
 		//pg.setLocation(x, y);
 		return pg;
 	};
 
-	PGraphics createCanvas(BMScontrols bms) {
+	PGraphics createCanvas(BMS bms) {
 		Bms = bms;
 		PGraphics pg = bms.applet.createGraphics((int) (w), (int)(h));
 		canvases.add(pg);
-//		states.get(0).canvases.add(canvas);
+		//		states.get(0).canvases.add(canvas);
 		//pg.setLocation(x, y);
 		return pg;
 	};
 
-	PGraphics createCanvas2(BMScontrols bms) {
+	PGraphics createCanvas2(BMS bms) {
 		Bms = bms;
 		PGraphics pg = bms.applet.createGraphics((int) (w), (int)(h));
 		canvases.add(pg);
 		return pg;
 	};
 
-	PGraphics createCanvas(float w,float h,BMScontrols bms) {
+	PGraphics createCanvas(float w,float h,BMS bms) {
 		Bms = bms;
 		PGraphics pg = bms.applet.createGraphics((int) (w), (int)(h));
 		canvases.add(pg);
 		return pg;
 	};
-	
+
 	PGraphics createCanvas(float w,float h) {
 		PGraphics pg = null;
 		if(applet!=null) {
-		pg = applet.createGraphics((int) (w), (int)(h));
-		canvases.add(pg);
+			pg = applet.createGraphics((int) (w), (int)(h));
+			canvases.add(pg);
 		}
 		return pg;
 	};
@@ -375,34 +375,34 @@ public class tab extends tabBoundary {
 
 	public void disptab(PGraphics scene) {
 
-//		tab t = states.get(state);
-//
-//		if (toggle&&canvas!=null) {
-//			canvas.beginDraw();
-//			canvas.background(50);
-//			t.logic();
-//			t.drawBorder();
-//			t.boundingBox();
-//			t.drawDragBox();
-//			t.drawButtons();
-//			t.drawMenus();
-//			t.drawTextboxes();
-//			t.drawTextareas();
-//			t.drawTextBlocks();
-//			t.drawSliderBoxes();
-//			if(t.title!=null&&t.visible){
-//				t.title.toggle = true;
-//				t.drawTitle();
-//				t.drawBorder();
-//				t.drawDmenu();
-//			}
-//			//t.drawImages();
-//			if(t.scrollable)t.drawSlider();
-//			//t.drawWindows();
-//			canvas.endDraw();
-//			scene.image(canvas,x,y);
-//		}
-		
+		//		tab t = states.get(state);
+		//
+		//		if (toggle&&canvas!=null) {
+		//			canvas.beginDraw();
+		//			canvas.background(50);
+		//			t.logic();
+		//			t.drawBorder();
+		//			t.boundingBox();
+		//			t.drawDragBox();
+		//			t.drawButtons();
+		//			t.drawMenus();
+		//			t.drawTextboxes();
+		//			t.drawTextareas();
+		//			t.drawTextBlocks();
+		//			t.drawSliderBoxes();
+		//			if(t.title!=null&&t.visible){
+		//				t.title.toggle = true;
+		//				t.drawTitle();
+		//				t.drawBorder();
+		//				t.drawDmenu();
+		//			}
+		//			//t.drawImages();
+		//			if(t.scrollable)t.drawSlider();
+		//			//t.drawWindows();
+		//			canvas.endDraw();
+		//			scene.image(canvas,x,y);
+		//		}
+
 		tab t = states.get(state);
 		t.canvas = states.get(0).canvas;
 		if(t!=null&&toggle&&t.canvas!=null) {
@@ -429,9 +429,9 @@ public class tab extends tabBoundary {
 				t.canvas.textFont(myFont);
 				int ty = 0;
 				if(applet.mousePressed)ty = PApplet.floor(PApplet.map(tyoff,0,text.length*20,0,text.length))-1;
-				
+
 				if(ty<0)ty = 0;
-				
+
 				int t2y = ty + PApplet.floor(h/textSize+8);
 				if(t2y>text.length-1)t2y = text.length;
 				for(int i=ty;i<t2y;i++) {
@@ -532,8 +532,6 @@ public class tab extends tabBoundary {
 			t.canvas.endDraw();
 			if(t.title==null)applet.image(t.canvas,(int) x,(int) y);
 			else applet.image(t.canvas,(int) x,(int) y+(int) title.h);
-			if(applet.mousePressed&&text!=null)
-				applet.println("tab disptab text",text.length,lcount);
 		}
 		if((t!=null&&toggle)) {
 			if(t.title!=null){
@@ -619,9 +617,9 @@ public class tab extends tabBoundary {
 				t.canvas.textFont(myFont);
 				if(globalTheme&&!localText)t.canvas.textSize(Bms.textSize);
 				int ty = PApplet.floor(PApplet.map(tyoff,0,text.length*20,0,text.length))-1;
-				
+
 				if(ty<0)ty = 0;
-				
+
 				int t2y = ty + PApplet.floor(h/textSize+8);
 				if(t2y>text.length-1)t2y = text.length;
 				for(int i=ty;i<t2y;i++) {
@@ -637,7 +635,7 @@ public class tab extends tabBoundary {
 					t.drawTitle(true);
 				}
 			}
-			
+
 
 		}
 
@@ -690,37 +688,27 @@ public class tab extends tabBoundary {
 	};
 
 	public Button add(int i,Button b){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
 		tab k = states.get(i);
-		b.parentCanvas = true;
+		b.setTab(k);
 		k.buttons.add(b);
 		return b;
 	};
 
 	public Menu add(int i,Menu m){
-		//clear();
-		m.Bms = Bms;
-		m.applet = applet;
 		tab k = states.get(i);
-		m.parentCanvas = true;
+		m.setTab(k);
 		k.menus.add(m);
 		return m;
 	};
 
 	public Dropdown add(int i,Dropdown d){
-		//clear();
-		d.Bms = Bms;
-		d.applet = applet;
 		tab k = states.get(i);
-		d.parentCanvas = true;
+		d.setTab(k);
 		k.dmenus.add(d);
 		return d;
 	};
 
 	public TextBox add(int i,TextBox t){
-		//clear();
 		t.Bms = Bms;
 		t.applet = applet;
 		tab k = states.get(i);
@@ -730,14 +718,13 @@ public class tab extends tabBoundary {
 	};
 
 	public TextArea add(int i,TextArea t){
-		t.setTab(this);
 		tab k = states.get(i);
+		t.setTab(k);
 		k.textareas.add(t);
 		return t;
 	};
 
 	public textBlock add(int i,textBlock t){
-		//clear();
 		t.Bms = Bms;
 		t.applet = applet;
 		tab k = states.get(i);
@@ -747,14 +734,12 @@ public class tab extends tabBoundary {
 	};
 
 	public String add(int i,String s){
-		//clear();
 		// tab k = states.get(i);
 		// k.textblock.add(s);
 		return s;
 	};
 
 	public Table_ add(int i,Table_ t){
-		//clear();
 		t.Bms = Bms;
 		t.applet = applet;
 		tab k = states.get(i);
@@ -765,21 +750,15 @@ public class tab extends tabBoundary {
 
 
 	public Button add(Button b){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
 		tab k = states.get(0);
-		b.parentCanvas = true;
+		b.setTab(k);
 		k.buttons.add(b);
 		return b;
 	};
 
 	public Button addToAll(Button b){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
 		tab k = states.get(0);
-		b.parentCanvas = true;
+		b.setTab(k);
 		for(int i=0;i<states.size();i++) {
 			states.get(i).buttons.add(b);
 		}
@@ -788,37 +767,29 @@ public class tab extends tabBoundary {
 	};
 
 	public Button add(Button b,int i){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
 		tab k = states.get(i);
-		b.parentCanvas = true;
+		b.setTab(k);
 		k.buttons.add(b);
 		return b;
 	};
-	
+
 	public Boundary addBoundary(Boundary b) {
 		boundaries.add(b);
 		return b;
 	};
 
 	public Menu add(Menu m){
-		//clear();
-		m.setBms(Bms);
+
 		tab k = states.get(0);
-		//	    m.x = x + m.bx;
-		m.parentCanvas = true;
-		m.localCanvas = canvas;
+		m.setTab(k);
 		k.menus.add(m);
 		return m;
 	};
 
 	public Menu addToAll(Menu b){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
+
 		tab k = states.get(0);
-		b.parentCanvas = true;
+		b.setTab(k);
 		for(int i=0;i<states.size();i++) {
 			states.get(i).menus.add(b);
 		}
@@ -827,21 +798,18 @@ public class tab extends tabBoundary {
 	};
 
 	public Dropdown add(Dropdown d){
-		//clear();
+
 		d.Bms = Bms;
 		d.applet = applet;
 		tab k = states.get(0);
-		d.parentCanvas = true;
+		d.setTab(k);
 		k.dmenus.add(d);
 		return d;
 	};
 
 	public Dropdown addToAll(Dropdown b){
-		//clear();
-		b.Bms = Bms;
-		b.applet = applet;
 		tab k = states.get(0);
-		b.parentCanvas = true;
+		b.setTab(k);
 		for(int i=0;i<states.size();i++) {
 			states.get(i).dmenus.add(b);
 		}
@@ -850,7 +818,6 @@ public class tab extends tabBoundary {
 	};
 
 	public TextBox add(TextBox t){
-		//clear();
 		t.Bms = Bms;
 		t.applet = applet;
 		tab k = states.get(0);
@@ -860,7 +827,6 @@ public class tab extends tabBoundary {
 	};
 
 	public TextBox addToAll(TextBox b){
-		//clear();
 		b.Bms = Bms;
 		b.applet = applet;
 		tab k = states.get(0);
@@ -873,31 +839,32 @@ public class tab extends tabBoundary {
 	};
 
 	public TextArea add(TextArea t){
-		t.setTab(this);
+
 		tab k = states.get(0);
+		t.setTab(k);
 		k.textareas.add(t);
 		return t;
 	};
 
-	public TextArea addToAll(TextArea b){
-		b.setTab(this);
+	public TextArea addToAll(TextArea t){
 		tab k = states.get(0);
+		t.setTab(k);
 		for(int i=0;i<states.size();i++) {
-			states.get(i).textareas.add(b);
+			states.get(i).textareas.add(t);
 		}
 
-		return b;
+		return t;
 	};
 
 	public String add(String s){
-		//clear();
+
 		tab k = states.get(0);
 		//k.textBlocks.add(s);
 		return s;
 	};
 
 	public Table_ add(Table_ t){
-		//clear();
+
 		t.Bms = Bms;
 		t.applet = applet;
 		t.parentCanvas = true;
@@ -907,7 +874,7 @@ public class tab extends tabBoundary {
 	};
 
 	public sliderBox add(sliderBox s){
-		//clear();
+
 		s.setBms(Bms);
 		s.parentCanvas = true;
 		tab k = states.get(0);
@@ -925,7 +892,7 @@ public class tab extends tabBoundary {
 	};
 
 	public sliderBox add(int i,sliderBox s){
-		//clear();
+
 		if(i<sliderBoxes.size()) {
 			s.setBms(Bms);
 			s.parentCanvas = true;
@@ -1055,12 +1022,12 @@ public class tab extends tabBoundary {
 			}
 		}
 		if(title!=null&&bbx==applet.mouseX&&bby==applet.mouseY)
-			title.toggleU(this,"visible",new PVector(applet.mouseX,applet.mouseY));
+			title.toggle(this,"visible",new PVector(applet.mouseX,applet.mouseY));
 
 	};
 
 	public void drawSliderBoxes(){
-		
+
 		for (int i=states.get(state).sliderBoxes.size()-1;i>-1; i--) {
 
 			sliderBox s = null;
@@ -1246,7 +1213,7 @@ public class tab extends tabBoundary {
 			}}
 
 		if(states.size()>0&&state<states.size()&&states.get(state).title!=null)
-			states.get(state).title.clickU(new PVector (applet.mouseX,applet.mouseY));
+			states.get(state).title.toggle(this,"visible",getMouse(true));
 	};
 
 	public void drawTitle(boolean k) {
@@ -1261,7 +1228,7 @@ public class tab extends tabBoundary {
 			}}
 
 		if(states.size()>0&&state<states.size()&&states.get(state).title!=null)
-			states.get(state).title.clickU(new PVector (applet.mouseX,applet.mouseY));
+			states.get(state).title.toggle(this,"visible",new PVector (applet.mouseX,applet.mouseY));
 	};
 
 	public void drawTitle(PGraphics scene) {
@@ -1272,7 +1239,8 @@ public class tab extends tabBoundary {
 				states.get(state).title.draw(scene);
 			}}
 
-		if(states.size()>0&&state<states.size()&&states.get(state).title!=null)states.get(state).title.toggleU(this, "toggle",mouse);
+		if(states.size()>0&&state<states.size()&&states.get(state).title!=null)
+			states.get(state).title.toggle(this,"visible",mouse);
 	};
 
 	public void drawBorder() {
@@ -1435,7 +1403,7 @@ public class tab extends tabBoundary {
 
 	public void drawButtons() {
 		applet.fill(255);
-
+		mouse = getMouse();
 		for (int i=0; i<buttons.size(); i++) {
 
 			Button b = buttons.get(i);
@@ -1450,7 +1418,7 @@ public class tab extends tabBoundary {
 			b.mouse =  mouse;
 			b.parentCanvas = true;
 			b.draw(canvas);
-			//			b.highlight(mouse);
+			b.highlight(mouse);
 			//			b.self_click2(mouse);
 		}
 	};
@@ -1492,18 +1460,18 @@ public class tab extends tabBoundary {
 				if(scrollable&&hscroll&&sliderh!=null)m.x = m.bx - sliderh.value;
 			}
 			m.mouse = mouse;
-//			m.mouse = getMouse();
-//			m.setMouse();
+			//			m.mouse = getMouse();
+			//			m.setMouse();
 
 			m.draw(canvas);
 			m.click(canvas);
 
-//			if(m.classicBar) {
-//				for(int j=0;j<m.items.size();j++){
-//					Button b = m.items.get(j);
-//					b.clickU(m.mouse);
-//				}
-//			}
+			//			if(m.classicBar) {
+			//				for(int j=0;j<m.items.size();j++){
+			//					Button b = m.items.get(j);
+			//					b.clickU(m.mouse);
+			//				}
+			//			}
 		}
 	};
 
@@ -1529,19 +1497,19 @@ public class tab extends tabBoundary {
 			m.draw(canvas);
 			m.click(canvas);
 
-//			if(m.classicBar) {
-//				for(int j=0;j<m.items.size();j++){
-//					Button b = m.items.get(j);
-//					b.clickU(m.mouse);
-//				}
-//			}
+			//			if(m.classicBar) {
+			//				for(int j=0;j<m.items.size();j++){
+			//					Button b = m.items.get(j);
+			//					b.clickU(m.mouse);
+			//				}
+			//			}
 		}
 	};
 
 	public void drawTextboxes() {
 		for (int i=0; i<textboxes.size(); i++) {
 			TextBox t = textboxes.get(i);
-			
+
 			if(title==null) {
 				if(scrollable&&vscroll&&sliderv!=null)t.y = t.by - sliderv.value;
 				if(scrollable&&hscroll&&sliderh!=null)t.x = t.bx - sliderh.value;
@@ -1553,9 +1521,9 @@ public class tab extends tabBoundary {
 				t.mouse = getMouse();
 			}
 			else {
-//				mouse.x -=parentTab.x;
-//				mouse.y -=parentTab.y;
-//				if(applet.mousePressed)applet.println("tab drawtbxs",parentTab.x,parentTab.y);
+				//				mouse.x -=parentTab.x;
+				//				mouse.y -=parentTab.y;
+				//				if(applet.mousePressed)applet.println("tab drawtbxs",parentTab.x,parentTab.y);
 				t.mouse = getMouse(parentTab.mouse);
 			}
 			t.draw(canvas);
@@ -1986,16 +1954,16 @@ public class tab extends tabBoundary {
 		}
 
 	};
-	
+
 
 	public void spToggle1(int i,int j,Object o,String s,String[] ss) {
 		if(i<menus.size()&&j<menus.get(i).items.size()) menus.get(i).sptoggle(j,o,s,ss,mouse);
 	};
-	
+
 	public void spToggle(int i,int j,Object o,String s,String[] ss) {
 		if(i<menus.size()&&j<menus.get(i).items.size()) menus.get(i).sptoggle(j,o,s,ss,mouse);
 	};
-	
+
 	public boolean toggle(int i) {
 		if(mouse==null)mouse = getMouse();
 		if(mouse!=null&&i<buttons.size())return buttons.get(i).click(mouse);
@@ -2010,13 +1978,18 @@ public class tab extends tabBoundary {
 
 	public boolean toggle(int i,Object o,String s) {
 		if(mouse==null)mouse = getMouse();
-		if(i<buttons.size())return buttons.get(i).click(o,s,mouse);
+		Button b = getButton(i);
+		if(i<buttons.size()&&getButton(i).hover&&Bms.mouseReleased)PApplet.println("tab toggle button",i,s,mouse,"button",b.x,b.y);
+		canvas.beginDraw();
+
+		canvas.endDraw();
+		if(i<buttons.size())return mouse!=null&&buttons.get(i).click(o,s,mouse);
 		else return false;
 	};
 
 	public boolean toggle(int i,int j,Object o,String s) {
 		if(mouse==null)mouse = getMouse();
-		
+
 		if(i<menus.size()&&j<menus.get(i).items.size())return getButton(i,j).click(o,s,mouse);
 		else return false;
 	};
@@ -2044,7 +2017,7 @@ public class tab extends tabBoundary {
 		if(i<menus.size()&&j<menus.get(i).items.size())return menus.get(i).toggleU(j,o,s,mouse);
 		else return false;
 	};
-	
+
 	public boolean toggleD(int i) {
 		if(mouse==null)mouse = getMouse();
 		if(mouse!=null&&i<buttons.size())return buttons.get(i).clickD(mouse);
@@ -2053,7 +2026,7 @@ public class tab extends tabBoundary {
 
 	public boolean toggleD(int i,int j) {
 		if(mouse==null)mouse = getMouse();
-		if(mouse!=null&&i<menus.size()&&j<menus.get(i).items.size())return getButton(i,j).clickU(mouse);
+		if(mouse!=null&&i<menus.size()&&j<menus.get(i).items.size())return getButton(i,j).clickD(mouse);
 		else return false;
 	};
 
@@ -2186,7 +2159,7 @@ public class tab extends tabBoundary {
 	public void cycle(int a,int b,int c,PVector m,Object o,String s){
 		if(a<menus.size()&&b<menus.get(a).items.size())menus.get(a).items.get(a).cycle(o,s,c,m);
 	};
-	
+
 	public boolean getToggleS(int i,Object o,String s){
 		if(mouse==null)mouse = getMouse();
 		if(i<buttons.size()){
@@ -2221,7 +2194,7 @@ public class tab extends tabBoundary {
 
 		}
 	};
-	
+
 	public boolean getToggleS(int i){
 		if(mouse==null)mouse = getMouse();
 		if(i<buttons.size()){
@@ -2263,7 +2236,7 @@ public class tab extends tabBoundary {
 
 			Button b = buttons.get(i);
 
-//			b.clickU(mouse);
+			//			b.clickU(mouse);
 			return b.toggle;
 
 		}else {
@@ -2280,7 +2253,7 @@ public class tab extends tabBoundary {
 		if(i<menus.size()&&j<menus.get(i).items.size()){
 
 			Button b = menus.get(i).items.get(j);
-//			b.click(mouse);
+			//			b.click(mouse);
 			return b.toggle;
 
 		}else {
@@ -2382,7 +2355,7 @@ public class tab extends tabBoundary {
 	};
 
 	public void set(int i,int j,float a,float b,Object o,String s) {
-//		if(applet.mousePressed)applet.println("tab set",o,s);
+		//		if(applet.mousePressed)applet.println("tab set",o,s);
 		if(getSlider(i,j)!=null)sliderBoxes.get(i).set(j,a,b,o,s);
 	};
 
@@ -2603,12 +2576,12 @@ public class tab extends tabBoundary {
 	};
 
 	boolean posTab() {
-		
+
 		if(parentTab!=null) {
 			return mouse.x>x-parentTab.x&&mouse.x<x+w-parentTab.x
 					&&mouse.y>y-parentTab.y&&mouse.y<y-parentTab.y;
 		}else {
-			 return applet.mouseX>x&&applet.mouseX<x+w&&applet.mouseY>y&&applet.mouseY<y+h;
+			return applet.mouseX>x&&applet.mouseX<x+w&&applet.mouseY>y&&applet.mouseY<y+h;
 		}
 	};
 
@@ -2644,14 +2617,14 @@ public class tab extends tabBoundary {
 			return new PVector(mouse.x-x-parentTab.x,mouse.y-y-parentTab.y);
 		}else {
 			if(title==null)return new PVector(applet.mouseX-x,applet.mouseY-y);
-			else return new PVector(applet.mouseX-x,applet.mouseY-y-title.h);
+			else return new PVector(applet.mouseX-x,applet.mouseY-(y));
 		}
 	};
-	
+
 	public PVector getrMouse(){
 		if(title==null)return new PVector(applet.mouseX-x,applet.mouseY-y);
 		else return new PVector(applet.mouseX-x,applet.mouseY-y-title.h);
-		
+
 	};
 
 	public PVector getMouse(boolean k){
@@ -2659,28 +2632,28 @@ public class tab extends tabBoundary {
 	};
 
 	PVector getMouse2(){
-		 return new PVector(applet.mouseX-x,applet.mouseY-y-title.h);
+		return new PVector(applet.mouseX-x,applet.mouseY-y-title.h);
 	};
 
 	public PVector getMouse(PVector m){
 		if(title==null)return new PVector(m.x-x,m.y-y);
-		else return new PVector(m.x-x,m.y-y-title.h);
+		else return new PVector(m.x-x,m.y-y);
 	};
-	
+
 	public PVector getMouse3(PVector m){
 		if(title==null)return new PVector(m.x-x,m.y-y);
 		else return new PVector(m.x-x,m.y-y-title.h);
 	};
-	
+
 	public void setBorder(boolean k) {
 		border = k;
 	};
-	
+
 	public void setBorder(float a) {
 		border = true;
 		borderSize = a;
 	};
-	
+
 	public void setBorder(float a,int b) {
 		border = true;
 		borderSize = a;
@@ -2691,12 +2664,12 @@ public class tab extends tabBoundary {
 		border = true;
 		borderCol = b;
 	};
-	
+
 	public void setBorderSize(int a) {
 		border = true;
 		borderSize = a;
 	};
-	
+
 	public void setTextSize(float a){
 		textSize = a;
 	};

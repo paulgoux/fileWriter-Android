@@ -9,7 +9,7 @@ import processing.core.PVector;
 
 public class Scene extends Boundary{
 	public PApplet applet;
-	public BMScontrols Bms;
+	public BMS Bms;
 	int id,gw = 25,gh = 20;
 	public float bordersize = 1,limit,sw,sh,gW,gH;
 	public int cols = 40, rows = 30;
@@ -30,7 +30,7 @@ public class Scene extends Boundary{
 	public ArrayList<Quad> fields = new ArrayList<Quad>();
 
 
-	public Scene(float xx,float yy, float ww, float hh,BMScontrols bms){
+	public Scene(float xx,float yy, float ww, float hh,BMS bms){
 
 		x = xx;
 		y = yy;

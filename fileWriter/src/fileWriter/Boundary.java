@@ -17,7 +17,7 @@ import processing.core.PVector;
 
 public class Boundary{
 	public PApplet applet;
-	public BMScontrols Bms;
+	public BMS Bms;
 	public float x1,x2,y1,y2,w,h,x3,y3,size = 1,x4,y4,D1,D2,T1,T2,collision_index,menux,menuy,deltamx,deltamy,tacx,tacy,
 			dir;
 	public float x,y,bx = x,by = y;
@@ -101,7 +101,7 @@ public class Boundary{
 		initColors();
 	};
 
-	public Boundary(BMScontrols bms){
+	public Boundary(BMS bms){
 		//		Bms = bms;
 		//		applet = bms.applet;
 		init(bms);
@@ -111,7 +111,7 @@ public class Boundary{
 	};
 
 
-	public Boundary(float X1, float Y1,float X2, float Y2,BMScontrols bms){
+	public Boundary(float X1, float Y1,float X2, float Y2,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 
@@ -129,7 +129,7 @@ public class Boundary{
 
 
 
-	public Boundary(float X1, float Y1,float ww,float hh,int Type,BMScontrols bms){
+	public Boundary(float X1, float Y1,float ww,float hh,int Type,BMS bms){
 		initColors();
 		Bms = bms;
 		applet = bms.applet;
@@ -327,7 +327,7 @@ public class Boundary{
 		create_rotation_points(Boundaries);
 	};
 
-	Boundary (float X1, float Y1,float X2,float Y2,float X3, float Y3,BMScontrols bms){
+	Boundary (float X1, float Y1,float X2,float Y2,float X3, float Y3,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 
@@ -341,7 +341,7 @@ public class Boundary{
 		initColors();
 	};
 
-	Boundary(PVector A, PVector B,PVector C,BMScontrols bms){
+	Boundary(PVector A, PVector B,PVector C,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		p1 = A;
@@ -355,7 +355,7 @@ public class Boundary{
 		initColors();
 	};
 
-	public Boundary(PVector A, PVector B,BMScontrols bms){
+	public Boundary(PVector A, PVector B,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		p1 = A;
@@ -367,7 +367,7 @@ public class Boundary{
 		initColors();
 	};
 
-	public Boundary(ArrayList<Point> A,BMScontrols bms){
+	public Boundary(ArrayList<Point> A,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		center = new PVector (0,0);
@@ -392,7 +392,7 @@ public class Boundary{
 		initColors();
 	};
 
-	public Boundary(ArrayList<Point> A,int k,BMScontrols bms){
+	public Boundary(ArrayList<Point> A,int k,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		center = new PVector (0,0);
@@ -428,7 +428,7 @@ public class Boundary{
 		initColors();
 	};
 
-	public Boundary(Boundary B,BMScontrols bms){
+	public Boundary(Boundary B,BMS bms){
 		Bms = bms;
 		applet = bms.applet;
 		//Boundaries = B.Boundaries;
@@ -652,7 +652,7 @@ public class Boundary{
 		//		}
 	};
 
-	void init(BMScontrols bms) {
+	void init(BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		palletehide = new Menu(0,200+300/2 - 100,20,50,Bms);

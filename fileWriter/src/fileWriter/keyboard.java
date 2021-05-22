@@ -3,7 +3,7 @@ package fileWriter;
 import processing.core.PApplet;
 
 public class keyboard {
-   BMScontrols Bms;
+   BMS Bms;
    PApplet p;
    public boolean getKey;
    public boolean key1;
@@ -17,7 +17,7 @@ public class keyboard {
       p = app;
    }
 
-   public keyboard(BMScontrols bms) {
+   public keyboard(BMS bms) {
       Bms = bms;
       p = bms.applet;
    }

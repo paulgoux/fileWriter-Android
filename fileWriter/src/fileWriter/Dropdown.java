@@ -5,7 +5,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Dropdown extends Menu {
-	//	  BMScontrols bms;
+	//	  BMS bms;
 	//	  PApplet applet;
 	public Slider slider;
 	public float windowx,bwindowx,hiddenw,r1,r2,r3,r4,txoff,tyoff;
@@ -22,7 +22,7 @@ public class Dropdown extends Menu {
 
 	};
 
-	public Dropdown(float xx, float yy, float ww, float h, String[] Labels,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, float h, String[] Labels,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -44,7 +44,7 @@ public class Dropdown extends Menu {
 	};
 
 
-	public Dropdown(float xx, float yy, float ww, String[] Labels,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, String[] Labels,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -66,7 +66,7 @@ public class Dropdown extends Menu {
 		setBms(bms);
 	};
 	
-	public Dropdown(float xx, float yy, float ww, float hh, String l, String[] Labels,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, float hh, String l, String[] Labels,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -91,7 +91,7 @@ public class Dropdown extends Menu {
 		//	    setBms(bms);
 	};
 	
-	public Dropdown(float xx, float yy, float ww, float hh, float ss,String l, String[] Labels,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, float hh, float ss,String l, String[] Labels,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -116,7 +116,7 @@ public class Dropdown extends Menu {
 		//	    setBms(bms);
 	};
 
-	public Dropdown(float xx, float yy, float ww, String l, String[] Labels,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, String l, String[] Labels,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -143,7 +143,7 @@ public class Dropdown extends Menu {
 
 
 
-	public Dropdown(float xx, float yy, float ww, String l, String[] Labels, int k,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, String l, String[] Labels, int k,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -168,7 +168,7 @@ public class Dropdown extends Menu {
 		setBms(bms);
 	};
 
-	public Dropdown(float xx, float yy, float ww, String[] Labels, int k,BMScontrols bms) {
+	public Dropdown(float xx, float yy, float ww, String[] Labels, int k,BMS bms) {
 
 		Bms = bms;
 		applet = bms.applet;
@@ -813,7 +813,7 @@ public class Dropdown extends Menu {
 
 	};
 
-	public void setBms(BMScontrols bms) {
+	public void setBms(BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		for(int i=0;i<items.size();i++) {

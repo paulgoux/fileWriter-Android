@@ -9,7 +9,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class sliderBox{
-	BMScontrols Bms;
+	BMS Bms;
 	PApplet applet;
 	float x,y,bx = x,by = y,w,bw = w,h,bh = h,vspacing,hspacing,r1,r2,r3,r4,rx,transparency,ghSpacing,gvSpacing;
 	public int id,cols,rows;
@@ -32,7 +32,7 @@ public class sliderBox{
 
 	
 
-	public sliderBox(float xx, float yy,float ww,float hh,float S,String [] Labels,BMScontrols bms) {
+	public sliderBox(float xx, float yy,float ww,float hh,float S,String [] Labels,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -68,7 +68,7 @@ public class sliderBox{
 
 	};
 
-	public sliderBox(float xx, float yy,float ww,float hh,float S,String [] Labels,float[]values,BMScontrols bms) {
+	public sliderBox(float xx, float yy,float ww,float hh,float S,String [] Labels,float[]values,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -107,7 +107,7 @@ public class sliderBox{
 	};
 
 
-	public sliderBox(float xx, float yy,float ww,float S,String [] Labels,float [] values ,BMScontrols bms) {
+	public sliderBox(float xx, float yy,float ww,float S,String [] Labels,float [] values ,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -270,7 +270,7 @@ public class sliderBox{
 		createTooltip();
 	};
 
-	public sliderBox(float xx, float yy,float ww,float S,Menu m,String [] Labels,BMScontrols bms) {
+	public sliderBox(float xx, float yy,float ww,float S,Menu m,String [] Labels,BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 
@@ -1022,7 +1022,7 @@ public class sliderBox{
 		}
 	};
 
-	public void setBms(BMScontrols bms) {
+	public void setBms(BMS bms) {
 		Bms = bms;
 		applet = bms.applet;
 		if(tooltip!=null)tooltip.setBms(bms);
