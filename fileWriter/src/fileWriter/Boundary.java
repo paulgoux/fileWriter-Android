@@ -72,7 +72,7 @@ public class Boundary{
 	public String [] settingsLabel = {"Cohesion","Separation","B room"};
 	public sliderBox settings;
 
-	public TextBox Sides ;
+	public TextArea Sides ;
 	public ArrayList<Float> norm = new ArrayList<Float>();
 	public ArrayList<Float[]> mdist = new ArrayList<Float[]>();
 	public ArrayList<Float[]> pdist = new ArrayList<Float[]>();
@@ -133,7 +133,7 @@ public class Boundary{
 		initColors();
 		Bms = bms;
 		applet = bms.applet;
-		Sides = new TextBox (applet.width-200,applet.height-200,20,20,5,"Sides",bms);
+		Sides = new TextArea (applet.width-200,applet.height-200,20,20,"Sides",bms);
 		float t1 = 0;
 		x1 = X1;
 		y1 = Y1;
@@ -656,7 +656,7 @@ public class Boundary{
 		Bms = bms;
 		applet = bms.applet;
 		palletehide = new Menu(0,200+300/2 - 100,20,50,Bms);
-		Sides = new TextBox (applet.width-200,applet.height-200,20,20,5,"Sides",bms);
+		Sides = new TextArea (applet.width-200,applet.height-200,20,20,"Sides",bms);
 		context = new Menu(0,applet.mouseY,90,contextlabels,Bms);
 		contextDel = new Menu(0,applet.mouseY,90,contextDellabels,Bms);
 		pallete = new Menu(0,200,90,palletelabels,0,Bms);

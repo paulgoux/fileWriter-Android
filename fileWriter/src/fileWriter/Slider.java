@@ -26,7 +26,7 @@ public class Slider{
 	public Menu parent;
 	public tab tooltip,parentTab;
 	public PVector mouse;
-	public TextBox Start = null,End = null,Current = null;
+	public TextArea Start = null,End = null,Current = null;
 	public HashMap<String,Boolean> values = new HashMap<String,Boolean>();
 
 	public Slider(float xx,float yy, float ww, float hh){
@@ -153,17 +153,17 @@ public class Slider{
 		Menu options = new Menu(0,0,80,s1,0,Bms);
 		tooltip.w = options.w;
 		tooltip.add(options);
-		TextBox t1 = new TextBox(0,0+30,68,20,20,"Start",Bms);
+		TextArea t1 = new TextArea(0,0+30,68,20,"Start",Bms);
 		tooltip.add(t1);
 		t1.w = options.w;
-		t1 = new TextBox(0,0+60,68,20,20,"End",Bms);
+		t1 = new TextArea(0,0+60,68,20,"End",Bms);
 		t1.w = options.w;
 		tooltip.add(t1);
-		t1 = new TextBox(0,0+90,68,20,20,"Value",Bms);
+		t1 = new TextArea(0,0+90,68,20,"Value",Bms);
 		t1.w = options.w;
-		tooltip.textboxes.add(t1);
-		Start = tooltip.textboxes.get(0);
-		End = tooltip.textboxes.get(1);
+		tooltip.textareas.add(t1);
+		Start = tooltip.textareas.get(0);
+		End = tooltip.textareas.get(1);
 		tooltip.h = 90+20;
 
 	};
@@ -181,17 +181,17 @@ public class Slider{
 			b.x = 0;
 			b.y = 0 + 20 * i;
 		}
-		TextBox t1 = tooltip.textboxes.get(0);
+		TextArea t1 = tooltip.textareas.get(0);
 		t1.y = 0+30;
 		t1.x = 0;
-		t1 = tooltip.textboxes.get(1);
+		t1 = tooltip.textareas.get(1);
 		t1.y = 0+60;
 		t1.x = 0;
-		t1 = tooltip.textboxes.get(2);
+		t1 = tooltip.textareas.get(2);
 		t1.y = 0+90;
 		t1.x = 0;
-		Start = tooltip.textboxes.get(0);
-		End = tooltip.textboxes.get(1);
+		Start = tooltip.textareas.get(0);
+		End = tooltip.textareas.get(1);
 
 		if(tooltip.y+tooltip.h>applet.height)tooltip.draggable = true;
 		else tooltip.draggable = false;
@@ -211,17 +211,17 @@ public class Slider{
 			b.x = 0;
 			b.y = 0 + 20 * i;
 		}
-		TextBox t1 = tooltip.textboxes.get(0);
+		TextArea t1 = tooltip.textareas.get(0);
 		t1.y = 0+30;
 		t1.x = 0;
-		t1 = tooltip.textboxes.get(1);
+		t1 = tooltip.textareas.get(1);
 		t1.y = 0+60;
 		t1.x = 0;
-		t1 = tooltip.textboxes.get(2);
+		t1 = tooltip.textareas.get(2);
 		t1.y = 0+90;
 		t1.x = 0;
-		Start = tooltip.textboxes.get(0);
-		End = tooltip.textboxes.get(1);
+		Start = tooltip.textareas.get(0);
+		End = tooltip.textareas.get(1);
 
 		if(tooltip.y+tooltip.h>applet.height)tooltip.draggable = true;
 		else tooltip.draggable = false;
@@ -284,12 +284,12 @@ public class Slider{
 					tdown = false;
 				}
 				//if(!tdown)cursor(ARROW);
-				TextBox t = tooltip.textboxes.get(2);
+				TextArea t = tooltip.textareas.get(2);
 				//						t.mouse = mouse2;
-				if(t.textBox!=""&&Float.parseFloat(t.textBox)>-99999999&&applet.keyPressed&&applet.key==PConstants.ENTER){
+				if(t.tempLine!=""&&Float.parseFloat(t.tempLine)>-99999999&&applet.keyPressed&&applet.key==PConstants.ENTER){
 					if(parent!=null){
 						try {
-							value = (float) Double.parseDouble(t.textBox);
+							value = (float) Double.parseDouble(t.tempLine);
 							if(pie)pieVal = valuex;
 						}catch(NumberFormatException nfe) {
 							applet.println("textbox no number");
@@ -404,12 +404,12 @@ public class Slider{
 					tdown = false;
 				}
 				//if(!tdown)cursor(ARROW);
-				TextBox t = tooltip.textboxes.get(2);
+				TextArea t = tooltip.textareas.get(2);
 				//					t.mouse = mouse2;
-				if(t.textBox!=""&&Float.parseFloat(t.textBox)>-99999999&&applet.keyPressed&&applet.key==PConstants.ENTER){
+				if(t.tempLine!=""&&Float.parseFloat(t.tempLine)>-99999999&&applet.keyPressed&&applet.key==PConstants.ENTER){
 					if(parent!=null){
 						try {
-							value = (float) Double.parseDouble(t.textBox);
+							value = (float) Double.parseDouble(t.tempLine);
 							if(pie)pieVal = valuex;
 						}catch(NumberFormatException nfe) {
 							applet.println("textbox no number");

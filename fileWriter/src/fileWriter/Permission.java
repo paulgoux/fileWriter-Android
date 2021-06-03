@@ -8,8 +8,8 @@ public class Permission{
 	String p;
 
 	public Permission(PApplet pParent,String permissionName) {
-		p = permissionName;
-		parent = pParent;
+		p = permissionName ;
+		parent = pParent ;
 		parent.requestPermission("android.permission."+ permissionName, "onPermissionResult", this);
 		parent.println(permissionName);
 	};

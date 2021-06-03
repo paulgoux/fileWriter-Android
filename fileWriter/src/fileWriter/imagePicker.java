@@ -21,7 +21,7 @@ public class imagePicker extends Activity {
    public Context context;
    public PImage img;
    public boolean image_loaded;
-   public Permission storage;
+   public Permission storage ;
 
    public imagePicker(BMS bms) {
       this.Bms = bms;

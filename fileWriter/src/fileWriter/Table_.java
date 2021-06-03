@@ -10,9 +10,9 @@ public class Table_ {
 	public int rows, cols, bcols, brows;
 	public float x, y, w, h, bx, by, bw, bh, xpadding, ypadding;
 
-	public ArrayList<TextBox> grid = new ArrayList<TextBox>();
+	public ArrayList<TextArea> grid = new ArrayList<TextArea>();
 	public ArrayList<Button> Buttons = new ArrayList<Button>();
-	public ArrayList<ArrayList<TextBox>> gridarray = new ArrayList<ArrayList<TextBox>>();
+	public ArrayList<ArrayList<TextArea>> gridarray = new ArrayList<ArrayList<TextArea>>();
 	public boolean initialize,parentCanvas;
 
 	public Table_(float x, float y, float w, float h, int cols, int rows) {
@@ -29,10 +29,10 @@ public class Table_ {
 		brows = rows;
 
 		for (int i=0; i<rows; i++) {
-			ArrayList<TextBox> g = new ArrayList<TextBox>();
+			ArrayList<TextArea> g = new ArrayList<TextArea>();
 			for (int j = 0; j<cols; j++) {
 
-				TextBox t = new TextBox(x + w/cols * j, y + h/rows * i, w / cols - 5, h / rows - 5, 2);
+				TextArea t = new TextArea(x + w/cols * j, y + h/rows * i, w / cols - 5, h / rows - 5,Bms);
 				grid.add(t);
 				g.add(t);
 			}
@@ -58,10 +58,10 @@ public class Table_ {
 		brows = rows;
 
 		for (int i=0; i<rows; i++) {
-			ArrayList<TextBox> g = new ArrayList<TextBox>();
+			ArrayList<TextArea> g = new ArrayList<TextArea>();
 			for (int j = 0; j<cols; j++) {
 
-				TextBox t = new TextBox(x + w/cols * j, y + h/rows * i, w / cols - 5, h / rows - 5, k);
+				TextArea t = new TextArea(x + w/cols * j, y + h/rows * i, w / cols - 5, h / rows - 5,Bms);
 				grid.add(t);
 				g.add(t);
 			}
@@ -79,12 +79,12 @@ public class Table_ {
 
 	public void initialize(){
 		if(!initialize){
-			gridarray = new ArrayList<ArrayList<TextBox>>();
+			gridarray = new ArrayList<ArrayList<TextArea>>();
 			for (int i=0; i<rows; i++) {
-				ArrayList<TextBox> g = new ArrayList<TextBox>();
+				ArrayList<TextArea> g = new ArrayList<TextArea>();
 				for (int j = 0; j<cols; j++) {
 
-					TextBox t = new TextBox(x + bw * j, y + bh * i, bw - 5, bh - 5, 2);
+					TextArea t = new TextArea(x + bw * j, y + bh * i, bw - 5, bh - 5,Bms);
 					grid.add(t);
 					g.add(t);
 				}
@@ -98,12 +98,12 @@ public class Table_ {
 		if(!initialize){
 			cols = Cols;
 			rows = Rows;
-			gridarray = new ArrayList<ArrayList<TextBox>>();
+			gridarray = new ArrayList<ArrayList<TextArea>>();
 			for (int i=0; i<rows; i++) {
-				ArrayList<TextBox> g = new ArrayList<TextBox>();
+				ArrayList<TextArea> g = new ArrayList<TextArea>();
 				for (int j = 0; j<cols; j++) {
 
-					TextBox t = new TextBox(x + bw * j, y + bh * i, bw - 5, bh - 5, 2);
+					TextArea t = new TextArea(x + bw * j, y + bh * i, bw - 5, bh - 5,Bms);
 					grid.add(t);
 					g.add(t);
 				}
@@ -115,11 +115,11 @@ public class Table_ {
 	public void draw() {
 		if((gridarray.size()>0)&&(gridarray.size()!=rows||gridarray.get(0).size()!=cols)||gridarray.size()==0)initialize();initialize = false;
 		for (int i=0; i<rows; i++) {
-			ArrayList<TextBox> a = gridarray.get(i);
+			ArrayList<TextArea> a = gridarray.get(i);
 
 			for (int j=0; j<cols; j++) {
 
-				TextBox t = a.get(j);
+				TextArea t = a.get(j);
 				if (t!=null)t.draw();
 			}
 		}
@@ -136,15 +136,15 @@ public class Table_ {
 
 		if(b!=null&&b.toggle){
 			for (int i=0; i<rows; i++) {
-				ArrayList<TextBox> a = gridarray.get(i);
+				ArrayList<TextArea> a = gridarray.get(i);
 
 				for (int j=0; j<cols; j++) {
 
-					TextBox t = a.get(j);
+					TextArea t = a.get(j);
 					int k = PApplet.floor(applet.random(0,10));
 					if (t!=null){
-						t.textBox = PApplet.str(k);
-						t.value = k;
+						t.tempLine = PApplet.str(k);
+						//t.value = k;
 					}}}b.toggle = false;}
 		}
 	};
@@ -152,12 +152,12 @@ public class Table_ {
 	public void old_button_functions(){
 
 		//if(b.toggle==1){
-		//      ArrayList<TextBox> temp = new ArrayList<TextBox>();
+		//      ArrayList<TextArea> temp = new ArrayList<TextArea>();
 		//      for(int j=0;j<cols;j++){
 
-		//        TextBox k = gridarray.get(0).get(0);
+		//        TextArea k = gridarray.get(0).get(0);
 
-		//        temp.add(new TextBox(x + bw * j, y + h, k.w,k.h,10));
+		//        temp.add(new TextArea(x + bw * j, y + h, k.w,k.h,10));
 		//      }
 		//  gridarray.add(temp);
 		//  rows ++;
@@ -170,9 +170,9 @@ public class Table_ {
 		//  if(b1.toggle==1){
 		//      for(int j=0;j<rows;j++){
 
-		//        TextBox k = gridarray.get(0).get(0);
+		//        TextArea k = gridarray.get(0).get(0);
 
-		//        gridarray.get(j).add(new TextBox(x + w, y + bh * j, k.w,k.h,10));
+		//        gridarray.get(j).add(new TextArea(x + w, y + bh * j, k.w,k.h,10));
 
 		//      }
 

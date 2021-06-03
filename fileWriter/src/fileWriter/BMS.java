@@ -297,6 +297,8 @@ public class BMS extends MouseFunctions{
 		}
 		if(kp)keyPressed = true;
 		else keyPressed = false;
+		mouseReleased = false;
+		click = false;
 	};
 
 
@@ -309,7 +311,7 @@ public class BMS extends MouseFunctions{
 	};
 
 	public void mouseLogic() {
-		output.mlogic();
+		//output.mlogic();
 	};
 
 	public void closeMouseFunctions() {
@@ -327,9 +329,9 @@ public class BMS extends MouseFunctions{
 	public void run(){
 		//if(mup)
 		if(output!=null) {
-			output.listen();
-			output.readContents();
-			output.drawDialogue();
+			//output.listen();
+			//output.readContents();
+//			output.drawDialogue();
 		}
 		keyBoardLogic();
 		if(!applet.mousePressed)keyPressed = false;
@@ -338,11 +340,11 @@ public class BMS extends MouseFunctions{
 	};
 	
 	public void runSP(){
-		if(output!=null) {
-			output.listen();
-			output.readContents();
-			output.drawDialogue();
-		}
+//		if(output!=null) {
+//			output.listen();
+//			output.readContents();
+//			output.drawDialogue();
+//		}
 		keyBoardLogic();
 		if(!applet.mousePressed)keyPressed = false;
 //		else mouseReleased = false;
@@ -1315,8 +1317,7 @@ public class BMS extends MouseFunctions{
 	};
 
 	public void keyboard() {
-		keyboard.logic();
-		output.keyboard();
+		keyboard.logic(); 
 		for (int i=0; i<textAreas.size(); i++) {
 			TextArea t = textAreas.get(i);
 			t.getKey();

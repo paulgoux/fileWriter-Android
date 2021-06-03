@@ -1,6 +1,5 @@
 package fileWriter;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -8,55 +7,54 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Environment;
+import android.view.Gravity;
 import android.widget.TextView;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class fileOutput {
-	BMS Bms;
+	public BMS Bms;
 	public PApplet applet;
 	public FileWriter output;
 	float x, y, w, h;
-	public boolean save, onMouseUp, mdown, debug, append, appendFile, match, 
-				   append2, overWrite, overWriteOnce = true, writeOnce, writeFile, click, saveImage,showDialogue,
-				   getPermission = true, fileExists, reWrite, folderExists, overWriteFirst, overWritelast, 
-				   writeFirst, folderCreated, saveAudio, saveVideo, getWritePermission, showDialog, checkFile;
-	public int counter = -1, counter2, writeCount, failCount, folderSize;
+	public boolean save, onMouseUp, mdown, debug, append = true, appendFile, match, 
+			append2, overWrite = true, overWriteOnce = true, writeOnce, writeFile, click, 
+			getPermission = true, fileExists, reWrite,folderCreated,folderExists,overWriteFirst, overWritelast, 
+			writeFirst, saveAudio, saveVideo, getWritePermission, showDialog,checkFile,saveImage;
+
+	public int counter=-1, counter2,writeCount, failCount, folderSize;;
 	public File file, file2, file3;
 	public File[] SDcards ; 
 	public String location, filePath, folderPath = "";
 	public String text = "oioijsofoivnsoindv", absolutePath, ext, fileName, fileContent = "";
-	public String androidDialogueTitle = "oiahoidhao", 
+	public String androidDialogueTitle = "Would you like to overWrite", 
 			dialogueB1Title = "", dialogueB2Title = "", dialogueBody;
-	public String title1 = "Would you like to create File";
-	public String title2 = "Would you like to overWrite File";
-	public String currentFile, lastFile;
-
 	Permission p;
-	Activity activity;
-	Context context;
+	public Activity activity;
+	public Context context;
 	public TextView msg;
 	public int msgId;
 	public PImage img;
 	public dialogueBox dbox, dbox1, dbox2, dbox3;
 
+	public String title1 = "Would you like to create File";
+	public String title2 = "Would you like to overWrite File";
+	public String currentFile, lastFile;
+	public TextArea textBox; 
+
 	public fileOutput() {
 
 	};
 
-	public fileOutput(BMS bms) {
-		Bms = bms;
-		applet = bms.applet;
-		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
-		init();
-	};
+	public fileOutput(boolean a, PApplet applet) {
 
-	public fileOutput(boolean a,BMS bms) {
-		Bms = bms;
-		applet = bms.applet;
+		this.applet = applet;
 		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
 		overWrite = true;
 		appendFile = true;
@@ -65,14 +63,48 @@ public class fileOutput {
 	public fileOutput(PApplet app) {
 		applet = app;
 		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
-		init();
+		textBox = new TextArea(20, 20, 400, 20, "Click to add text",this);
+		//init();
 	};
 	//currently unused
-	public fileOutput(String location,BMS bms) {
+	public fileOutput(String location, PApplet applet) {
+
+		this.applet = applet;
+		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
+		setLocation(location);
+		init();
+	};
+
+	public fileOutput(PApplet applet, String location) {
+
+		this.applet = applet;
+		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
+		setLocation(location);
+		init();
+	};
+
+	public fileOutput(boolean a, BMS bms) {
+
 		Bms = bms;
 		applet = bms.applet;
 		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
-		//img = applet.get();
+		overWrite = true;
+		appendFile = true;
+	};
+
+	public fileOutput(BMS bms) {
+		Bms = bms;
+		applet = bms.applet;
+		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
+		textBox = new TextArea(20, 20, 400, 20, "Click to add text",this);
+		//init();
+	};
+	//currently unused
+	public fileOutput(String location, BMS bms) {
+
+		Bms = bms;
+		applet = bms.applet;
+		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
 		setLocation(location);
 		init();
 	};
@@ -81,7 +113,6 @@ public class fileOutput {
 
 		Bms = bms;
 		applet = bms.applet;
-		this.applet = applet;
 		p = new Permission(applet, "WRITE_EXTERNAL_STORAGE");
 		setLocation(location);
 		init();
@@ -98,16 +129,15 @@ public class fileOutput {
 		y = 0;
 		w = applet.width;
 		h = applet.height;
-		//dbox = 
 
 		String s1 = "Would you like to overWrite "+fileName+"."+ext+"?";
-		//float dboxWidth = 120;
-		//float tSize = 20;
-		//applet.textSize(tSize);
-		//float dw = applet.textWidth(s1)+100;
-		//float dboxHeight = 150;
-		//float dx = applet.width/2-dw/2;
-		//float dy = applet.height/2-50/2;
+		float dboxWidth = 120;
+		float tSize = 20;
+		applet.textSize(tSize);
+		float dw = applet.textWidth(s1)+100;
+		float dboxHeight = 150;
+		float dx = applet.width/2-dw/2;
+		float dy = applet.height/2-50/2;
 	};
 
 	public void loadStrings() {
@@ -163,127 +193,92 @@ public class fileOutput {
 			output.close();
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
 	};
 
+	public void writeLine(String s){
+		if (writeFile&&location!=null) {
+			//applet.println("write");
+			writeLn(s);
+			close();
+			loadStrings();
+		}
+	};
+
+	public void write(String s) {
+
+		if (!overWrite)checkLocation();
+		try {
+
+			output = new FileWriter(file2, append);
+		}
+		catch(IOException e) {
+		}
+		printWrite(s);
+	};
+	
 	public void write(float s) {
 
 		if (!overWrite)checkLocation();
 		try {
 
 			output = new FileWriter(file2, append);
-			printWrite(s);
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
-		
-	};
-
-	public void writeLn(float s) {
-		if (!overWrite)checkLocation();
-		
-		try {
-
-			output = new FileWriter(file2, append);
-			printWriteLn(s);
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
-	};
-
-	public void write(float[] s) {
-
-		if (!overWrite)checkLocation();
-		try {
-
-			output = new FileWriter(file2, append);
-			printWrite(s);
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
-	};
-
-	public void writeLn(float[] s) {
-		if (!overWrite)checkLocation();
-		try {
-
-			output = new FileWriter(file2, append);
-			printWriteLn(s);
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
-	};
-
-	public void write(String s) {
-		if (!overWrite)checkLocation();
-		try {
-
-			output = new FileWriter(file2, append);
-			printWrite(s);
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
+		printWrite(s);
 	};
 
 	public void writeLn(String s) {
 		if (!overWrite)checkLocation();
-		
+		applet.println("writeln", s);
 		try {
 			output = new FileWriter(file2, append);
-			printWriteLn(s);
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
-		
+		printWriteLn(s);
+	};
+	
+	public void writeLn(float s) {
+		if (!overWrite)checkLocation();
+		applet.println("writeln", s);
+		try {
+			output = new FileWriter(file2, append);
+		}
+		catch(IOException e) {
+		}
+		printWriteLn(s);
 	};
 
 	public void write(String []s) {
 		if (!overWrite)checkLocation();
 		try {
 			output = new FileWriter(file2, append);
-			printWrite(s);
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
-		
+		printWrite(s);
+	};
+	
+	public void write(float []s) {
+		if (!overWrite)checkLocation();
+		try {
+			output = new FileWriter(file2, append);
+		}
+		catch(IOException e) {
+		}
+		printWrite(s);
 	};
 
 	public void writeLn(String []s) {
 		if (!overWrite)checkLocation();
 		try {
 			output = new FileWriter(file2, append);
-			printWriteLn(s);
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
-		
+		printWriteLn(s);
 	};
 
 	public void printWrite(String s) {
@@ -292,13 +287,53 @@ public class fileOutput {
 			output.append(s);
 		}
 		catch(IOException e) {
-			applet.println("pw no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("pw no such path",file2);
+		}
+		catch(NullPointerException e) {
+			applet.println("printw s fail", file2, e);
+		}
+	};
+	
+	public void printWrite(float s) {
+		if (!overWrite)checkLocation();
+		try {
+			output.append(applet.str(s));
+		}
+		catch(IOException e) {
+		}
+		catch(NullPointerException e) {
+			applet.println("printw s fail", file2, e);
 		}
 	};
 
-	public void printWrite(String[] s) {
+	public void printWriteLn(String s) {
+		if (!overWrite)checkLocation();
+		try {
+			applet.println("write", s);
+			output.append(s);
+			output.append("\n");
+		}
+		catch(IOException e) {
+		}
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
+		}
+	};
+	
+	public void printWriteLn(float s) {
+		if (!overWrite)checkLocation();
+		try {
+			applet.println("write", s);
+			output.append(applet.str(s));
+			output.append("\n");
+		}
+		catch(IOException e) {
+		}
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
+		}
+	};
+
+	public void printWrite(String []s) {
 		if (!overWrite)checkLocation();
 		try {
 			for (int i=0; i<s.length; i++) {
@@ -306,50 +341,12 @@ public class fileOutput {
 			}
 		}
 		catch(IOException e) {
-			applet.println("pw no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("pw no such path",file2);
+		}
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
 		}
 	};
-
-	public void printWriteLn(String s) {
-		if (!overWrite)checkLocation();
-		try {
-			output.append(s);
-			output.append("\n");
-		}
-		catch(IOException e) {
-			applet.println("pwln no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("pwln no such path",file2);
-		}
-	};
-
-	public void printWrite(float s) {
-		if (!overWrite)checkLocation();
-		try {
-			output.append(applet.str(s));
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
-	};
-
-	public void printWriteLn(float s) {
-		if (!overWrite)checkLocation();
-		try {
-			output.append(applet.str(s));
-			output.append("\n");
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
-		}
-	};
-
+	
 	public void printWrite(float []s) {
 		if (!overWrite)checkLocation();
 		try {
@@ -358,24 +355,9 @@ public class fileOutput {
 			}
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
 		}
-	};
-
-	public void printWriteLn(float []s) {
-		if (!overWrite)checkLocation();
-		try {
-			for (int i=0; i<s.length; i++) {
-				output.append(applet.str(s[i]));
-				output.append("\n");
-			}
-		}
-		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
 		}
 	};
 
@@ -388,30 +370,46 @@ public class fileOutput {
 			}
 		}
 		catch(IOException e) {
-			applet.println("no such path io",file2);
-		}catch(NullPointerException e) {
-			applet.println("no such path",file2);
+		}
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
 		}
 	};
 	
+	public void printWriteLn(float []s) {
+		if (!overWrite)checkLocation();
+		try {
+			for (int i=0; i<s.length; i++) {
+				output.append(applet.str(s[i]));
+				output.append("\n");
+			}
+		}
+		catch(IOException e) {
+		}
+		catch(NullPointerException e) {
+			applet.println("printwln s fail", file2, e);
+		}
+	};
+
+
 	File findFolder() {
 
 		if (!folderExists) {
 			try { 
 				file = new File(absolutePath + "/" + folderPath);
-				PApplet.println("checking folder", file);
+				applet.println("checking folder", file);
 				if (!file.exists()) {
 					file.mkdirs();
 					folderCreated = true;
 					file2 = new File(file, "/"+fileName + "." + ext);
 				} else {
 					folderExists = true;
-					PApplet.println("folder Exists");
+					applet.println("folder Exists");
 				}
 			} 
 			catch (Exception e) { 
 				failCount++;
-				if (failCount<5)PApplet.println("Error while creating folder: " + absolutePath, folderPath);
+				if (failCount<5)applet.println("Error while creating folder: " + absolutePath, folderPath);
 			}
 		}
 		return file;
@@ -459,7 +457,7 @@ public class fileOutput {
 
 	public void checkLocation() {
 
-		PApplet.println("find folder");
+		applet.println("find folder");
 		findFolder();
 		checkLastFile();
 	};
@@ -467,13 +465,13 @@ public class fileOutput {
 	public void dboxLogic() {
 		tab t = dbox.main;
 		tab t1 = dbox1.main;
-		if (Bms.mousePressed)showDialogue = true;
-		if (getWritePermission)showDialogue = false;
+		if (applet.mousePressed)showDialog = true;
+		if (getWritePermission)showDialog = false;
 
-		if (showDialogue) {
-			if (Bms.click)applet.println("show Dialogue");
+		if (showDialog) {
+			//	      if (applet.click)applet.println("show Dialogue");
 			if (!folderExists||!folderExists&&!fileExists) {
-				if (Bms.click)applet.println("no folder");
+				//	        if (applet.click)applet.println("no folder");
 
 				if (dbox!=null) {
 					//if(!folderCreated)t.title.label = title1 +" " + fileName +"."+ext;
@@ -491,7 +489,7 @@ public class fileOutput {
 					}
 				}
 			} else {
-				if (Bms.click)applet.println("file found", fileName +"."+ext);
+				//	        if (applet.click)applet.println("file found", fileName +"."+ext);
 				//androidDialogueTitle = file2.getAbsolutePath();
 				//String s1 = file.getAbsolutePath();
 				if (dbox1!=null) {
@@ -515,11 +513,11 @@ public class fileOutput {
 	};
 
 	public void logic() {
-		if (Bms.mousePressed&&!mdown) {
+		if (applet.mousePressed&&!mdown) {
 			img = applet.get();
 			mdown = true;
 		}
-		if (!Bms.mousePressed)mdown = false;
+		if (!applet.mousePressed)mdown = false;
 	};
 
 	public void saveImage() {
@@ -536,7 +534,23 @@ public class fileOutput {
 	};
 
 	public void listen() {
+
 		//if(writeFile&&dbox.main.getButton(0).click)checkLocation();
+		if (location==null) {
+			textBox.setMouse();
+			textBox.draw();
+		}
+		//else getPermission = true;
+	};
+
+
+
+	public void getKeys() {
+		//textBox.getKey();
+		//if (textBox.keyCode!=CODED&&textBox.keyCode==66){
+		//  setLocation(textBox.tempLine);
+		//  KetaiKeyboard.toggle(applet);
+		//}
 	};
 
 	public void readContents() {
@@ -550,41 +564,85 @@ public class fileOutput {
 		}
 	};
 
-
 	public void setLocation(String s) {
-		if (getPermission)getAndroidInfo();
+		applet.println("fileOutput setLocation");
+		if(getPermission)getAndroidInfo();
 		location = s;
-		folderPath = s.substring(0, s.lastIndexOf("/"));
+		int n = s.lastIndexOf("/");
+		if(n>-1)folderPath = s.substring(0, n);
+		else folderPath = "";
 		fileName = s.replace(folderPath+"/", "");
 		getExt(fileName);
-		PApplet.println("Fname", folderPath);
-		PApplet.println("fileName", fileName);
-		PApplet.println("counter", counter);
-		PApplet.println("ext", ext);
+		applet.println("Fname", folderPath);
+		applet.println("fileName", fileName);
+		applet.println("counter", counter);
+		applet.println("ext", ext);
 		checkLocation();
 		init();
 	}
 
 	public void getExt(String location) {
 
-		int count = 0;
-		fileName = location.substring(0, location.indexOf("."));
-		ext = location.replace(fileName, "");
-		ext = ext.replace(".", "");
-		ext = ext.replace(fileName, "");
+		int n = location.indexOf(".");
+		if(n>-1){
+			fileName = location.substring(0, location.indexOf("."));
+			ext = location.replace(fileName, "");
+			ext = ext.replace(".", "");
+			ext = ext.replace(fileName, "");
+		}
+		else {
+			fileName = location;
+			ext = "txt";
+		}
+
 	};
 
-	public void drawDialogue() {
-		dboxLogic();
-		if (Bms.mousePressed)showDialog = true;
-		if (getWritePermission)showDialog = false;
-		if (showDialog) {
-			applet.fill(255);
-			applet.rect(0, 0, applet.width, applet.height);
-			if (dbox!=null&&!fileExists&&!writeFile)dbox.draw();
-			if (dbox1!=null&&fileExists&&!writeFile)dbox1.draw();
-			if (dbox2!=null)dbox2.draw();
-			if (dbox3!=null)dbox3.draw();
+
+	public void dialogBox() {
+
+		if (location!=null&&!writeFile) {
+			msg = new TextView(activity); 
+			msg.setBackgroundColor(Color.BLUE);
+			msg.setTextSize(32);
+			msg.setText(dialogueBody); 
+			msg.setGravity(Gravity.CENTER_HORIZONTAL); 
+			msg.setTextColor(Color.WHITE); 
+
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+					AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+					builder.setView(msg);
+					
+					if(folderCreated) androidDialogueTitle = "Would you like to create File: " +fileName+"."+ext+"?";
+					else if(fileExists) androidDialogueTitle += ": "+fileName+"counter"+"."+ext+"?";
+					else androidDialogueTitle = "Would you like to create File: " +fileName+"."+ext+"?";
+					
+					builder.setTitle(androidDialogueTitle);
+					builder.setPositiveButton(dialogueB1Title, 
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, 
+								int which) {
+							writeFile = true;
+							overWrite = true;
+							append = false;
+							reWrite = true;
+						}
+					}
+							);
+					builder.setNegativeButton(dialogueB2Title, 
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, 
+								int which) {
+							writeFile = true;
+							overWrite = false;
+							//act.finish();
+						}
+					}
+							)
+					.show();
+				}
+			}
+					);
 		}
 	};
 
@@ -626,6 +684,7 @@ public class fileOutput {
 		return applet.mouseX>x&&applet.mouseX<x+w&&applet.mouseY>y&&applet.mouseY<y+h;
 	};
 
+
 	int getFolderLength(String s1) {
 		String path = s1;
 		File directory = new File(path);
@@ -637,7 +696,7 @@ public class fileOutput {
 	int getLastIndex(String s1) {
 		String  []s = null;
 		String path = s1;
-		//applet.println("Files", "Path: " + path);
+		//println("Files", "Path: " + path);
 		File directory = new File(path);
 		File[] files = directory.listFiles();
 		int count = -1;
@@ -645,7 +704,7 @@ public class fileOutput {
 		if (!checkFile) {
 			if (!writeFile)counter = -1;
 			s = new String [files.length];
-			//applet.println("Files", "Size: "+ files.length);
+			//println("Files", "Size: "+ files.length);
 			for (int i = 0; i < files.length; i++) {
 				s[i] = files[i].getName();
 				if (s[i].contains(fileName)) {
@@ -671,14 +730,14 @@ public class fileOutput {
 				}
 				if (s[i].contains(fileName+"."+ext))count++;
 			}
-			//applet.println("Counter:", counter,count);
+			//println("Counter:", counter,count);
 			counter ++;
 		}
 		String s2 = path+"/"+fileName+"."+ext;
 		String s3 = fileName+"."+ext;
 		if (count>-1)fileExists = true;
 		currentFile = s3;
-		//applet.println("get last index:", s3);
+		//println("get last index:", s3);
 		checkFile = true;
 		return counter;
 	};
@@ -692,19 +751,5 @@ public class fileOutput {
 			return false;
 		}
 	};
-	
-	public void keyboard() {
-		
-	};
-	
-	public void save() {
-		
-	};
-	
-	public void mlogic() {
-		
-	};
-	
-	//public void 
-	
+
 };

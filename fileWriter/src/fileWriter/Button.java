@@ -31,7 +31,7 @@ public class Button{
 	public ArrayList<Button> buttons = new ArrayList<Button>();
 	public HashMap<String,Boolean> values = new HashMap<String,Boolean>();
 	public String Text = "" ;
-	public TextBox textbox;
+	public TextArea textbox;
 	public PVector mouse;
 	public tab parentTab;
 	public Dropdown dMenu;
@@ -114,7 +114,7 @@ public class Button{
 		textSize = hh/2+hh/5;
 		bsize = tsize;
 		value = true;
-		textbox = new TextBox(x,y,ww+1,hh,Cols);
+		textbox = new TextArea(x,y,ww+1,hh,Bms);
 
 	};
 
@@ -132,7 +132,7 @@ public class Button{
 		label = Label;
 		blabel = label;
 		value = true;
-		textbox = new TextBox(x,y,ww+1,hh,Cols,Label);
+		textbox = new TextArea(x,y,ww+1,hh,Label,Bms);
 
 	};
 
@@ -207,7 +207,7 @@ public class Button{
 				if(textbtm)textbox.y    = y + h;
 				if(textleft) textbox.x  = x - w;
 				if(textright) textbox.x = x + w;
-				Text = textbox.textBox;
+				Text = textbox.tempLine;
 
 				if(pos()||textbox.pos()||textbox.toggle)texttoggle=true;
 				else texttoggle = false;

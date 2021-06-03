@@ -6,7 +6,7 @@ import processing.event.MouseEvent;
 //MouseFunctions class
 public class MouseFunctions {
 	PApplet app;
-	public boolean click,mousePressed,drag,mup,mouseReleased,mouseClicked,mouseDragged;
+	public boolean click,mousePressed,drag,mup,mouseReleased,mouseClicked,mouseDragged ;
 	
 	public MouseFunctions() {
 		

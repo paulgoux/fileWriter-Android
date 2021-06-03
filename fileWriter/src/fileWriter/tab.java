@@ -6,8 +6,8 @@ import java.util.HashMap;
 import processing.core.*;
 
 public class tab extends tabBoundary {
-	BMS Bms;
-	PApplet applet;
+	public BMS Bms;
+	public PApplet applet;
 	public PGraphics canvas,canvas2;
 	public  float x, y, w, h,bx,by,bh,bw,r1,r2,r3,r4,transparency,bbx,bby,textSize = 12,borderSize;
 	int tabindex = -1, current,id,Width,Height,lastState,txoff,tyoff;
@@ -35,8 +35,6 @@ public class tab extends tabBoundary {
 
 	public ArrayList<TextArea> textareas = new ArrayList<TextArea>();
 	public ArrayList<textBlock> textBlocks = new ArrayList<textBlock>();
-	public ArrayList<TextBox> textboxes = new ArrayList<TextBox>();
-
 
 	public ArrayList<String[]> temp_text = new ArrayList<String[]>();
 	public ArrayList<processing.data.Table> temp_tables = new ArrayList<processing.data.Table>();
@@ -418,8 +416,6 @@ public class tab extends tabBoundary {
 			t.drawButtons();
 			t.drawMenus();
 			t.drawDmenu();
-			t.drawTextboxes();
-			t.drawTextareas();
 			t.drawSliderBoxes();
 			t.drawTextBlocks();
 			if(t.scrollable)t.drawSlider();
@@ -506,8 +502,6 @@ public class tab extends tabBoundary {
 			t.drawButtons();
 			t.drawMenus();
 			t.drawDmenu();
-			t.drawTextboxes();
-			t.drawTextareas();
 			t.drawSliderBoxes();
 			t.drawTextBlocks();
 			if(t.scrollable)t.drawSlider();
@@ -572,8 +566,6 @@ public class tab extends tabBoundary {
 			t.boundingBox();
 			t.drawButtons();
 			t.drawMenus();
-			t.drawTextboxes();
-			t.drawTextareas();
 			t.drawTable_s();
 			//t.displayInnerTabs();
 			t.drawText();
@@ -607,8 +599,6 @@ public class tab extends tabBoundary {
 			t.drawButtons();
 			t.drawMenus();
 			t.drawDmenu();
-			t.drawTextboxes();
-			t.drawTextareas();
 			t.drawSliderBoxes();
 			t.drawTextBlocks();
 			if(t.scrollable)t.drawSlider();
@@ -706,15 +696,6 @@ public class tab extends tabBoundary {
 		d.setTab(k);
 		k.dmenus.add(d);
 		return d;
-	};
-
-	public TextBox add(int i,TextBox t){
-		t.Bms = Bms;
-		t.applet = applet;
-		tab k = states.get(i);
-		t.parentCanvas = true;
-		k.textboxes.add(t);
-		return t;
 	};
 
 	public TextArea add(int i,TextArea t){
@@ -817,27 +798,6 @@ public class tab extends tabBoundary {
 		return b;
 	};
 
-	public TextBox add(TextBox t){
-		t.Bms = Bms;
-		t.applet = applet;
-		tab k = states.get(0);
-		t.parentCanvas = true;
-		k.textboxes.add(t);
-		return t;
-	};
-
-	public TextBox addToAll(TextBox b){
-		b.Bms = Bms;
-		b.applet = applet;
-		tab k = states.get(0);
-		b.parentCanvas = true;
-		for(int i=0;i<states.size();i++) {
-			states.get(i).textboxes.add(b);
-		}
-
-		return b;
-	};
-
 	public TextArea add(TextArea t){
 
 		tab k = states.get(0);
@@ -914,7 +874,6 @@ public class tab extends tabBoundary {
 
 
 	public void clear(){
-		textboxes = new ArrayList<TextBox>();
 		textareas = new ArrayList<TextArea>();
 		//windows = new ArrayList<Window>();
 		buttons = new ArrayList<Button>();
@@ -1505,68 +1464,7 @@ public class tab extends tabBoundary {
 			//			}
 		}
 	};
-
-	public void drawTextboxes() {
-		for (int i=0; i<textboxes.size(); i++) {
-			TextBox t = textboxes.get(i);
-
-			if(title==null) {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = t.bx - sliderh.value;
-			}else {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = title.h + t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = title.h + t.bx - sliderh.value;
-			}
-			if(parentTab==null) {
-				t.mouse = getMouse();
-			}
-			else {
-				//				mouse.x -=parentTab.x;
-				//				mouse.y -=parentTab.y;
-				//				if(applet.mousePressed)applet.println("tab drawtbxs",parentTab.x,parentTab.y);
-				t.mouse = getMouse(parentTab.mouse);
-			}
-			t.draw(canvas);
-		}
-	};
-
-	public void drawTextboxes(PGraphics canvas) {
-		for (int i=0; i<textboxes.size(); i++) {
-			TextBox t = textboxes.get(i);
-			//			if(parentTab==null)t.mouse = mouse;
-			//			else t.mouse = getMouse(mouse);
-			t.mouse = getMouse();
-			t.mouse.x += t.x+x;
-			t.mouse.y += t.y+y;
-			//			if(scrollable&&vscroll&&sliderv!=null)t.y = t.by - sliderv.value;
-			//			if(scrollable&&hscroll&&sliderh!=null)t.x = t.bx - sliderh.value;
-			if(title==null) {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = t.bx - sliderh.value;
-			}else {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = title.h + t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = title.h + t.bx - sliderh.value;
-			}
-			t.draw(canvas);
-		}
-	};
-
-	public void drawTextareas() {
-		for (int i=0; i<textareas.size(); i++) {
-			TextArea t = textareas.get(i);
-			t.mouse = mouse;
-			if(title==null) {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = t.bx - sliderh.value;
-			}else {
-				if(scrollable&&vscroll&&sliderv!=null)t.y = title.h + t.by - sliderv.value;
-				if(scrollable&&hscroll&&sliderh!=null)t.x = title.h + t.bx - sliderh.value;
-			}
-			t.getKey();
-			t.draw(true);
-		}
-	};
-
+	
 	public void drawTextareas(PGraphics canvas) {
 		for (int i=0; i<textareas.size(); i++) {
 			TextArea t = textareas.get(i);
@@ -1582,9 +1480,10 @@ public class tab extends tabBoundary {
 				if(scrollable&&vscroll&&sliderv!=null)t.y = title.h + t.by - sliderv.value;
 				if(scrollable&&hscroll&&sliderh!=null)t.x = title.h + t.bx - sliderh.value;
 			}
+			t.parentTab = this;
 			//			t.toggle= true;
 			t.getKey();
-			t.draw(canvas);
+			t.draw();
 		}
 	};
 
@@ -1794,10 +1693,6 @@ public class tab extends tabBoundary {
 				//(b.w-applet.textWidth(b.label))/2-((b.w-applet.textWidth(b.label))/2)/2
 				t.x = (w-t.w)/2;
 			}
-			for (int i=0; i<textboxes.size(); i++) {
-				TextBox t = textboxes.get(i);
-				t.x = (w-t.w)/2;
-			}
 
 			for (int i=0; i<textareas.size(); i++) {
 				TextArea t = textareas.get(i);
@@ -1850,10 +1745,6 @@ public class tab extends tabBoundary {
 				t.x = 5;
 				t.x = (w-t.w)/2-((w-t.w)/2)/2;
 			}
-			for (int i=0; i<textboxes.size(); i++) {
-				TextBox t = textboxes.get(i);
-				t.x = (w-t.w)/2-((w-t.w)/2)/2;
-			}
 
 			for (int i=0; i<textareas.size(); i++) {
 				TextArea t = textareas.get(i);
@@ -1901,10 +1792,6 @@ public class tab extends tabBoundary {
 
 			for (int i=0; i<tables.size(); i++) {
 				Table_ t = tables.get(i);
-				t.x = 5;
-			}
-			for (int i=0; i<textboxes.size(); i++) {
-				TextBox t = textboxes.get(i);
 				t.x = 5;
 			}
 

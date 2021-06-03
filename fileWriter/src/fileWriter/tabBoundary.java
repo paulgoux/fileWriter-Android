@@ -59,7 +59,7 @@ public class tabBoundary{
 	public String [] settingsLabel = {"Cohesion","Avoidance"};
 	public sliderBox settings;
 
-	public TextBox Sides;
+	public TextArea Sides;
 	public ArrayList<Float> norm = new ArrayList<Float>();
 	public ArrayList<Float[]> mdist = new ArrayList<Float[]>();
 	public ArrayList<Float[]> pdist = new ArrayList<Float[]>();
@@ -91,7 +91,7 @@ public class tabBoundary{
 		complexsub = new Menu(applet.width-200,applet.height-200,90,complexmenu,bms);
 		convertToPath = new Menu(applet.mouseX,applet.mouseY,90,convertmenu,bms);
 		connectedlMenu = new Menu(applet.mouseX,applet.mouseY,90,connectedlMenul,bms);
-		Sides = new TextBox (applet.width-200,applet.height-200,20,20,5,"Sides",bms);
+		Sides = new TextArea (applet.width-200,applet.height-200,20,20,"Sides",bms);
 		type = -1;
 
 	};
